@@ -22,6 +22,8 @@ A cross-platform (IOS and Android) mobile app that enables students to find ones
 
 ### Environment setup
 * [React Native](https://reactnative.dev/docs/set-up-your-environment?platform=android)
+* [Expo](https://docs.expo.dev/get-started/next-steps/)
+* [Expo CLI](https://docs.expo.dev/more/expo-cli/)
 
 ```
 React native is for both IOS and Android development
@@ -54,8 +56,9 @@ npm run install:all
 3. You can check the react native app by typing commands at either **root** or **frontend** level:
 
 ```
-npm run start:frontend (root level)
-npm run start (frontend)
+cd fontend
+npm start (this works on expo go but simulator will fail due to network permission)
+npx expo start --tunnel (works on both expo go and ios simulator)
 ```
 
 backend entry point (server.js) is not ready yet, so skip it.
