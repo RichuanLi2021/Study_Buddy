@@ -1,9 +1,9 @@
 // Define the props type for FormLogin
-import { View, Text, TextInput, TextStyle, StyleProp } from 'react-native'
+import { View, Text, TextInput, TextStyle, StyleProp, TextInputProps } from 'react-native'
 import React from 'react'
 
 // Define the interface for the props
-interface FormLoginProps {
+interface FormLoginProps extends TextInputProps {
   title: string;
   value: string;
   handleChangeText: (text: string) => void;
@@ -22,17 +22,17 @@ const FormLogin: React.FC<FormLoginProps> = ({
     }) => {
     return (
         <View className='space-y-2' style={[{ marginTop: 7 }, otherStyles]}>
-            <Text className='text-base text-gray-100 font-normal'>{title}</Text>
-            <View className="border-2 border-black w-full h-14 px-0 bg-black rounded-2xl">
+            <Text className='text-base text-gray-700 font-normal'>{title}</Text>
+            <View className="border-2 border-black w-full h-14 px-0 bg-amber-50 rounded-2xl">
                 <TextInput
                     className='text-base text-gray-100 font-normal'
-                    value={value}  // Use the value prop here
+                    value={value}
                     onChangeText={handleChangeText}
                     style={{ 
                         borderWidth: 1, 
                         borderColor: '#ccc', 
                         padding: 13, 
-                        borderRadius: 5 
+                        borderRadius: 14 
                     }}
                     keyboardType={keyboardType}
                 />
