@@ -1,4 +1,3 @@
-import React from 'react';
 import { Text, TouchableOpacity, TouchableOpacityProps, StyleProp, ViewStyle } from 'react-native';
 
 // Extend TouchableOpacityProps to allow passing additional props if necessary
@@ -9,13 +8,13 @@ interface CustomButtonProps extends TouchableOpacityProps {
     isLoading: boolean;
 }
 
-const CustomButton: React.FC<CustomButtonProps> = ({
+const CustomButton = ({
     title,
     handlePress,
     buttonStyle,
     isLoading,
     ...props
-}) => {
+}: CustomButtonProps) => {
     return (
         <TouchableOpacity 
             style={[{

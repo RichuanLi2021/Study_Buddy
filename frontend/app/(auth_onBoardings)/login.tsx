@@ -1,5 +1,5 @@
 import { View, Text, Alert } from 'react-native'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ScrollView } from 'react-native';
 
@@ -71,7 +71,7 @@ const login = () => {
                             value={form.password}
                             handleChangeText={(usrPassword) => setForm({...form, password: usrPassword})}
                             otherStyles={{marginTop: 7}}
-                            secureTextEntry={true} //Hide password from viewing
+                            secureTextEntry
                         />
 
                         {/* Login Button */}

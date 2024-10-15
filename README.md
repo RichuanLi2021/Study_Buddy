@@ -64,3 +64,28 @@ npx expo start --tunnel (works on both expo go and ios simulator)
 backend entry point (server.js) is not ready yet, so skip it.
 
 7. Now you’re all set to start development. Happy coding!
+
+### Issues with tailwind version
+1. if you receive the Error: "Use process(css).then(cb) to work with async plugins"
+Check the version of installed tailwindcss in package.json
+if it is above version 3.3.2, you need to downgrade it to 3.3.2 by doing:
+
+```
+npm install tailwindcss@3.3.2 --save-dev
+```
+
+2. Other issues with missing module in node_modules
+
+Check the correcponding module or dependencies, make sure they are installed.
+
+```
+npm list dependency_name (e.g.,tailwindcss postcss autoprefixer)
+```
+
+Otherwise, re-install, or re-install your node module by doing:
+
+```
+rm -rf node_modules
+rm package-lock.json
+npm install
+```
