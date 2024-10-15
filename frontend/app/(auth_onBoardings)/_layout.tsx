@@ -12,7 +12,7 @@ const Auth_Layout = () => {
         }}
         />
         <Stack.Screen
-          name="register"
+          name="signup"
           options={{
             headerShown: false
           }}

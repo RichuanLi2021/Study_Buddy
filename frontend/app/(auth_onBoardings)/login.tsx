@@ -2,7 +2,7 @@ import { View, Text, Alert } from 'react-native'
 import { useState } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { ScrollView } from 'react-native';
-
+import { Link } from 'expo-router';
 import FormLogin from '@/components/auth/forLogin/FormLogin'
 import CustomButton from '@/components/auth/button/buttons'
 import { validateEmail, validatePassword } from '@/components/auth/forLogin/Input_validation';
@@ -42,9 +42,7 @@ const login = () => {
             justifyContent: "center",
             alignItems: "center",
             padding: 10
-
-        }}
-        >
+        }}>
             <ScrollView>
                 <View className='w-full justify-center h-full px-4 my-6'>
                         {/* <Image/> add image here */}
@@ -78,13 +76,23 @@ const login = () => {
                         <CustomButton
                             title="Login"
                             handlePress={handleLoginPress}
-                            buttonStyle={{
-                                marginTop: 20
-                            } }
+                            buttonStyle={{marginTop: 20}}
                             isLoading={false}
                         />
 
+                        <View className='justify-center pt-5 flex-row gap-2'>
+                            <Text className='text-base text-gray-50 font-normal'>
+                                Don't have an account? 
+                            </Text>
+                            <Link 
+                                href='/signup' 
+                                className='text-base font-extrabold text-orange-500'>
+                                Sign-up now
+                            </Link>
+                        </View>
                 </View>
+
+
             </ScrollView>
 
     </SafeAreaView>
