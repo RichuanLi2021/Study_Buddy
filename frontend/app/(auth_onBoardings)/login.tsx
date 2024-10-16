@@ -49,7 +49,11 @@ const login = () => {
                         <Text 
                             className="text-2xl text-cyan-900 text-semibold mt-10 font-semibold"
                             style={{
-                                marginBottom: 30
+                                marginBottom: 20,
+                                textAlign: 'center',
+                                fontSize: 28,
+                                color: '#FF7900',
+                                fontWeight: 700,
                             }}> 
                                 Log into Study-buddy
                         </Text>
@@ -86,8 +90,16 @@ const login = () => {
                             </Text>
                             <Link 
                                 href='/signup' 
-                                className='text-base font-extrabold text-orange-500'>
+                                className='text-base font-extrabold text-orange-500'
+                                style={{                                                       
+                                color: 'blue',
+                                fontWeight: 600,
+                                textDecorationLine: 'underline',
+                                
+                                 }}> 
                                 Sign-up now
+                                
+                                
                             </Link>
                         </View>
                 </View>

@@ -37,7 +37,7 @@ const Signup = () => {
               marginBottom: 20,
               textAlign: 'center',
               fontSize: 28,
-              color: '#FFA500',
+              color: '#FF7900',
               fontWeight: 700,
             }}> 
             Signup with your Email
