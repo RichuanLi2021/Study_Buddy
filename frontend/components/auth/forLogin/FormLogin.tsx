@@ -24,7 +24,7 @@ const FormLogin = ({
         const [showPassword, setShowPassword] = useState(false);
     
     return (
-        <View className='space-y-2' style={[{ marginTop: 7 }, otherStyles]}>
+        <View className='space-y-2' style={[{ marginTop: 5 }, otherStyles]}>
             <Text className='text-base text-gray-700 font-normal'>{title}</Text>
             <View className="border-2 border-black w-full h-14 px-0 bg-amber-50 rounded-2xl">
                 <TextInput
@@ -34,7 +34,7 @@ const FormLogin = ({
                     style={{ 
                         borderWidth: 1, 
                         borderColor: '#ccc', 
-                        padding: 13, 
+                        padding: 7, 
                         borderRadius: 14 
                     }}
                     secureTextEntry={title==="password" && showPassword}

@@ -9,11 +9,6 @@ A cross-platform (IOS and Android) mobile app that enables students to find ones
 * Command Line Tools
 * [GitBash](https://git-scm.com/downloads) (Windows only)
 * [Terminal](Mac laptop)
-* MongoDB
-  * You can download [MongoDB Community](https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-os-x/#std-label-install-mdb-community-macos) -- MacOS
-  (https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-windows/) --Windowss
-* Database Management System (DBMS) GUI
-  * [MongoDB GUI](https://www.mongodb.com/products/tools/compass) MongoDB GUI that you can start/ shutdown the server and check the db.  
 * [React.native](https://reactnative.dev/docs/environment-setup)  
 * [Node.js](https://nodejs.org/en/) the app server
 * [NPM](https://www.npmjs.com/)
@@ -63,7 +58,18 @@ npx expo start --tunnel (works on both expo go and ios simulator)
 
 backend entry point (server.js) is not ready yet, so skip it.
 
-7. Now you’re all set to start development. Happy coding!
+4. Environment variable setup
+```
+cd frontend
+
+create a copy of .env.sample, and then rename it to .env
+
+Grab the environment from firebase/project setting/General
+
+copy the corresponding value and paste into the empty quotes in .env file.
+
+
+```
 
 ### Issues with tailwind version
 1. if you receive the Error: "Use process(css).then(cb) to work with async plugins"

@@ -48,6 +48,7 @@ const login = () => {
                     //user signed in
                     const user = userCredential.user;
                     console.log("Hello! :" + user)
+                    Alert.alert("You're authenticated!")
                 })
                 .catch((err) => {
                     if(err.code ===  AuthErrorCodes.INVALID_PASSWORD ||err.code === AuthErrorCodes.USER_DELETED) {
@@ -86,16 +87,19 @@ const login = () => {
             }}
         >
             <ScrollView>
-                <View className="w-full justify-center h-full px-4 my-6">
-                    {/* <Image/> add image here */}
-                    <Text
-                        className="text-2xl text-cyan-900 text-semibold mt-10 font-semibold"
-                        style={{
-                            marginBottom: 30,
-                        }}
-                    >
-                        Log into Study-buddy
-                    </Text>
+                <View className='w-full justify-center h-full px-4 my-6'>
+                        {/* <Image/> add image here */}
+                        <Text 
+                            className="text-2xl text-cyan-900 text-semibold mt-10 font-semibold"
+                            style={{
+                                marginBottom: 20,
+                                textAlign: 'center',
+                                fontSize: 28,
+                                color: '#FF7900',
+                                fontWeight: 700,
+                            }}> 
+                                Log into Study-buddy
+                        </Text>
 
                     {/* Enter email */}
                     <FormLogin
@@ -125,26 +129,30 @@ const login = () => {
                         </Text>
                     ) : null}
 
-                    {/* Login Button */}
-                    <CustomButton
-                        title="Login"
-                        handlePress={handleLoginPress}
-                        buttonStyle={{ marginTop: 20 }}
-                        isLoading={isSubmitting}
-                    />
-                    
+                        {/* Login Button */}
+                        <CustomButton
+                            title="Login"
+                            handlePress={handleLoginPress}
+                            buttonStyle={{marginTop: 20}}
+                            isLoading={false}
+                        />
 
-                    <View className="justify-center pt-5 flex-row gap-2">
-                        <Text className="text-base text-gray-50 font-normal">
-                            Don't have an account?
-                        </Text>
-                        <Link
-                            href="/signup"
-                            className="text-base font-extrabold text-orange-500"
-                        >
-                            Sign-up now
-                        </Link>
-                    </View>
+                        <View className='justify-center pt-5 flex-row gap-2'>
+                            <Text className='text-base text-gray-50 font-normal'>
+                                Don't have an account? 
+                            </Text>
+                            <Link 
+                                href='/signup' 
+                                className='text-base font-extrabold text-orange-500'
+                                style={{                                                       
+                                color: 'blue',
+                                fontWeight: 600,
+                                textDecorationLine: 'underline',
+                                
+                                 }}> 
+                                Sign-up now
+                            </Link>
+                        </View>
                 </View>
             </ScrollView>
         </SafeAreaView>

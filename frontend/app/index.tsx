@@ -8,9 +8,17 @@ export default function App() {
 
       <Text className="text-3xl" style={{fontFamily: 'chilispepper'}}>This is the homepage</Text>
       <StatusBar style="auto" />
-      <Link href="/(tabs)/usr_profile" style={{color: 'blue'}}>Go profile</Link>
+      <Link href="/(tabs)/usr_profile" style={{fontSize: 28,
+              color: '#FF7900',
+              fontWeight: 700}}>Go profile</Link>
 
-      <Link href="/(auth_onBoardings)/login" style={{color: 'blue'}}>Go login</Link>
+      <Link href="/(auth_onBoardings)/login" style={{fontSize: 28,
+              color: '#FF7900',
+              fontWeight: 700}}>Go login</Link>
+
+      <Link href="/(auth_onBoardings)/signup" style={{fontSize: 28,
+              color: '#FF7900',
+              fontWeight: 700}}>Go to Signup</Link>
     </View>
   );
 }

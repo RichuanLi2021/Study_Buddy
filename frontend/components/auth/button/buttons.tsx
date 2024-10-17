@@ -18,7 +18,7 @@ const CustomButton = ({
     return (
         <TouchableOpacity 
             style={[{
-                backgroundColor: '#facc15',
+                backgroundColor: '#FF7900',
                 borderRadius: 12,
                 minHeight: 50,
                 justifyContent: 'center',
