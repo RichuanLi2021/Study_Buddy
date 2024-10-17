@@ -22,7 +22,7 @@ const FormEditProfile: React.FC<FormEditProfileProps> = ({
     }) => {
     return (
         <View className='space-y-2' style={[{ marginTop: 7 }, otherStyles]}>
-            <Text style={{color: 'black', fontWeight: '700'}}>{title}</Text>
+            <Text style={{color: 'black', fontWeight: 700}}>{title}</Text>
             <View style={{backgroundColor: 'lightgrey', width: 150, height: 40}}>
                 <TextInput
                     className='text-base text-black-100 font-normal'
