@@ -37,7 +37,7 @@ const FormLogin = ({
                         padding: 13, 
                         borderRadius: 14 
                     }}
-                    secureTextEntry={title==="password" && !showPassword}
+                    secureTextEntry={title==="password" && showPassword}
                     keyboardType={keyboardType}
                 />
             </View>

@@ -2,8 +2,6 @@ import { Text, View} from "react-native";
 import { StatusBar } from 'expo-status-bar';
 import { Link} from "expo-router";
 
-import { Colors } from "@/constants/Colors";
-
 export default function App() {
   return (
     <View className="flex-1 items-center justify-center bg-white">
