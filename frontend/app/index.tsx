@@ -13,6 +13,8 @@ export default function App() {
       <Link href="/(tabs)/usr_profile" style={{color: 'blue'}}>Go profile</Link>
 
       <Link href="/(auth_onBoardings)/login" style={{color: 'blue'}}>Go login</Link>
+
+      <Link href="/(tabs)/matches" style={{color: 'blue'}}>Check your matches</Link>
     </View>
   );
 }
