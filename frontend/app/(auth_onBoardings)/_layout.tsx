@@ -1,16 +1,21 @@
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import React from 'react'
 
-const Tabs_layout = () => {
+const Auth_Layout = () => {
   return (
     <>
       <Stack>
         <Stack.Screen
-          name="usr_profile"
+          name="sign-in"
           options={{
             headerShown: false
         }}
+        />
+        <Stack.Screen
+          name="sign-up"
+          options={{
+            headerShown: false
+          }}
         />
       </Stack>
 
@@ -19,4 +24,4 @@ const Tabs_layout = () => {
   )
 }
 
-export default Tabs_layout
+export default Auth_Layout
