@@ -1,49 +1,49 @@
-image: node:latest
+# image: node:latest
 
-stages:
-  - build
-  - test
-  - deploy
+# stages:
+#   - build
+#   - test
+#   - deploy
 
-cache:
-  paths:
-    - node_modules/
+# cache:
+#   paths:
+#     - node_modules/
 
-# Build for Android
-android_build:
-  stage: build
-  script:
-    - cd frontend
-    - npm install
-    - npx expo build:android --no-wait  # Build Android APK in Expo's classic mode
-
-# Build for iOS
-ios_build:
-  stage: build
-  script:
-    - cd frontend
-    - npm install
-    - npx expo build:ios --no-wait  # Build iOS IPA in Expo's classic mode
-
-# Build for Web
-web_build:
-  stage: build
-  script:
-    - cd frontend
-    - npm install
-    - npx expo build:web  # Build static assets for web
-  only:
-    - master
-
-# test:
-#   stage: test
+# # Build for Android
+# android_build:
+#   stage: build
 #   script:
-#     - npm ci
-#     - npm run test
+#     - cd frontend
+#     - npm install
+#     - npx expo build:android --no-wait  # Build Android APK in Expo's classic mode
 
-# Deploy to production (add your actual deployment steps)
-production_deploy:
-  stage: deploy
-  script:
-    - echo "Deploying to production..."
-    # Add your production deployment steps (web server, app stores, etc.)
+# # Build for iOS
+# ios_build:
+#   stage: build
+#   script:
+#     - cd frontend
+#     - npm install
+#     - npx expo build:ios --no-wait  # Build iOS IPA in Expo's classic mode
+
+# # Build for Web
+# web_build:
+#   stage: build
+#   script:
+#     - cd frontend
+#     - npm install
+#     - npx expo build:web  # Build static assets for web
+#   only:
+#     - master
+
+# # test:
+# #   stage: test
+# #   script:
+# #     - npm ci
+# #     - npm run test
+
+# # Deploy to production (add your actual deployment steps)
+# production_deploy:
+#   stage: deploy
+#   script:
+#     - echo "Deploying to production..."
+#     # Add your production deployment steps (web server, app stores, etc.)
