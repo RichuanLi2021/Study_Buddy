@@ -1,11 +1,21 @@
-import { View, Text } from 'react-native'
+import { Stack } from 'expo-router'
+import { StatusBar } from 'expo-status-bar'
 import React from 'react'
 
 const Tabs_layout = () => {
   return (
-    <View>
-      <Text>tabs' layout</Text>
-    </View>
+    <>
+      <Stack>
+        <Stack.Screen
+          name="usr_profile"
+          options={{
+            headerShown: false
+        }}
+        />
+      </Stack>
+
+      <StatusBar backgroundColor='#161622' style="light" />
+    </>
   )
 }
 

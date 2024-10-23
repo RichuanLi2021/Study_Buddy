@@ -35,6 +35,7 @@ const usr_profile = () => {
                     title="Edit"
                     handlePress={handleEditPress}
                     buttonStyle={{width: 50, marginRight: 20}}
+                    isLoading={false}
                 />
             </View>
 
@@ -43,11 +44,7 @@ const usr_profile = () => {
                 {/* Profile picture (uses placeholder image icon.png from project directory) */}
                 <Image
                     style={{
-                        width: 170,
-                        height: 'parent',
-                        borderStyle: 'solid',
-                        borderWidth: 2,
-                        borderColor: 'black'
+                        //properties you entered are not compatible with type of StyleProp for ImageStyle
                         }}
                     source={require('../../assets/images/icon.png')}
                 />
@@ -158,7 +155,12 @@ const usr_profile = () => {
 
                 {/* Update button to save edited form/dropdown menu information (does nothing right now) */}
                 <View style={{alignItems: "center"}}>
-                    <SaveButton title="Update" buttonStyle={{width: 75, height: 40, marginTop: 10}}/>
+                    <SaveButton 
+                        title="Update" 
+                        handlePress={handleEditPress}
+                        isLoading={false}
+                        buttonStyle={{width: 75, height: 40, marginTop: 10,
+                    }}/>
                 </View>
             </View>
 
