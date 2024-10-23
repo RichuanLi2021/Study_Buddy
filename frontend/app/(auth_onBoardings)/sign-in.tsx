@@ -1,11 +1,10 @@
-import { View, Text, Alert } from 'react-native';
+import { View, Text, Alert, ScrollView} from 'react-native';
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { ScrollView } from 'react-native';
 import { Link } from 'expo-router';
 import FormLogin from '@/components/auth/forLogin/FormLogin';
 import CustomButton from '@/components/auth/button/buttons';
-import { validateEmail, validatePassword } from '@/components/auth/forLogin/Input_validation';
+import { validateEmail, validatePassword } from '@/components/auth/InputValidation/Input_validation';
 import { AuthErrorCodes, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/config/firebaseConfig';
 
@@ -142,7 +141,7 @@ const login = () => {
                                 Don't have an account? 
                             </Text>
                             <Link 
-                                href='/signup' 
+                                href='/sign-up' 
                                 className='text-base font-extrabold text-orange-500'
                                 style={{                                                       
                                 color: 'blue',

@@ -6,7 +6,7 @@ interface FormSignupProps {
     value: string;
     handleChangeText: (text: string) => void;
     otherStyles?: StyleProp<TextStyle>;
-    keyboardType?: 'email-address';
+    keyboardType?: 'default' | 'email-address' | 'numeric' | 'phone-pad';
 }
 
 
