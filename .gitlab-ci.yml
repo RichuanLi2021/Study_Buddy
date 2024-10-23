@@ -1,5 +1,5 @@
 image: node:latest
-# Define the stages of the pipeline
+
 stages:
   - build
   - test
@@ -9,13 +9,31 @@ cache:
   paths:
     - node_modules/
 
-# Define the jobs and their steps
-build:
+# Build for Android
+android_build:
   stage: build
   script:
     - cd frontend
     - npm install
-    - npx expo build:web
+    - npx expo build:android --no-wait  # Build Android APK in Expo's classic mode
+
+# Build for iOS
+ios_build:
+  stage: build
+  script:
+    - cd frontend
+    - npm install
+    - npx expo build:ios --no-wait  # Build iOS IPA in Expo's classic mode
+
+# Build for Web
+web_build:
+  stage: build
+  script:
+    - cd frontend
+    - npm install
+    - npx expo build:web  # Build static assets for web
+  only:
+    - master
 
 # test:
 #   stage: test
@@ -23,14 +41,9 @@ build:
 #     - npm ci
 #     - npm run test
 
+# Deploy to production (add your actual deployment steps)
 production_deploy:
   stage: deploy
   script:
     - echo "Deploying to production..."
-    # Add your deployment commands here for the production environment
-
-staging_deploy:
-  stage: deploy
-  script:
-    - echo "Deploying to staging..."
-    # Add your deployment commands here for the staging environment
+    # Add your production deployment steps (web server, app stores, etc.)
