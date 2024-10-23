@@ -15,7 +15,7 @@ build:
   script:
     - cd frontend
     - npm install
-    - npx expo start --tunnel
+    - npx expo build:web
 
 # test:
 #   stage: test
