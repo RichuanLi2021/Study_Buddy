@@ -1,28 +1,21 @@
-import { View, Text } from 'react-native'
-import React from 'react'
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
+import React from 'react'
 
 const Tabs_layout = () => {
   return (
-      <>
-            <Stack>
-              <Stack.Screen
-                name="home"
-                options={{
-                  headerShown: false
-              }}
-              />
-              <Stack.Screen
-                name="usr_profile"
-                options={{
-                  headerShown: false
-                }}
-              />
-            </Stack>
+    <>
+      <Stack>
+        <Stack.Screen
+          name="usr_profile"
+          options={{
+            headerShown: false
+        }}
+        />
+      </Stack>
 
-            <StatusBar backgroundColor='#161622' style="light" />
-          </>
+      <StatusBar backgroundColor='#161622' style="light" />
+    </>
   )
 }
 

@@ -1,6 +1,4 @@
-import { View, Text } from 'react-native'
 import { Stack } from 'expo-router'
-import React from 'react'
 import { StatusBar } from 'expo-status-bar'
 
 const Auth_Layout = () => {
@@ -8,13 +6,13 @@ const Auth_Layout = () => {
     <>
       <Stack>
         <Stack.Screen
-          name="login"
+          name="sign-in"
           options={{
             headerShown: false
         }}
         />
         <Stack.Screen
-          name="register"
+          name="sign-up"
           options={{
             headerShown: false
           }}

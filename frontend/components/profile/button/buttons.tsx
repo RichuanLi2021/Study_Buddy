@@ -9,6 +9,13 @@ interface EditButtonProps extends TouchableOpacityProps {
     isLoading: boolean;
 }
 
+interface SaveButtonProps extends TouchableOpacityProps {
+    title: string;
+    handlePress: () => void;
+    buttonStyle?: StyleProp<ViewStyle>;
+    isLoading: boolean;
+}
+
 export const EditButton: React.FC<EditButtonProps> = ({
     title,
     handlePress,
@@ -22,7 +29,42 @@ export const EditButton: React.FC<EditButtonProps> = ({
                 backgroundColor: 'white',
                 borderRadius: 12,
                 borderColor: 'black',
-                borderWidth: '1px',
+                borderWidth: 1,
+                minHeight: 18,
+                justifyContent: 'center',
+                alignItems: 'center',
+            },
+                buttonStyle,
+            ]}
+            onPress={handlePress}
+            activeOpacity={0.7}
+            {...props}
+        >
+            <Text style={{
+                color: 'black',
+                fontWeight: 'bold',
+                fontSize: 18,
+            }}>
+                {title}
+            </Text>
+        </TouchableOpacity>
+    );
+}
+
+export const SaveButton: React.FC<SaveButtonProps> = ({
+    title,
+    handlePress,
+    buttonStyle,
+    isLoading,
+    ...props
+}) => {
+    return (
+        <TouchableOpacity
+            style={[{
+                backgroundColor: 'lightyellow',
+                borderRadius: 12,
+                borderColor: 'black',
+                borderWidth: 1,
                 minHeight: 18,
                 justifyContent: 'center',
                 alignItems: 'center',
