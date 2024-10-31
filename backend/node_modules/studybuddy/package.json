@@ -1,0 +1,22 @@
+{
+  "name": "studybuddy",
+  "version": "1.0.0",
+  "description": "mobile app project for both ios and android system",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\"",
+    "start:frontend": "npm run start --prefix frontend",
+    "start:backend": "npm run start --prefix backend",
+    "install:all": "npm install --prefix frontend && npm install --prefix backend"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@git.cs.dal.ca:richuan/study_buddy.git"
+  },
+  "author": "4193JE1",
+  "license": "ISC",
+  "devDependencies": {
+    "concurrently": "^9.0.1"
+  }
+}
