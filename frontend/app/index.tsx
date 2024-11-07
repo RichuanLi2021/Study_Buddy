@@ -21,10 +21,6 @@ export default function App() {
       <Link href="/(auth_onBoardings)/sign-up" style={{fontSize: 28,
               color: '#FF7900',
               fontWeight: 700}}>Go to Signup</Link>
-
-      <Link href="/(tabs)/matches" style={{fontSize: 28,
-              color: '#FF7900',
-              fontWeight: 700}}>Check your matches</Link>
     </View>
   );
 }
