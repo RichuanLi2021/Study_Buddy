@@ -1,12 +1,14 @@
 import { View, Text, Alert, ScrollView} from 'react-native';
 import { useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import FormLogin from '@/components/auth/forLogin/FormLogin';
 import CustomButton from '@/components/auth/button/buttons';
 import { validateEmail, validatePassword } from '@/components/auth/InputValidation/Input_validation';
 import { AuthErrorCodes, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/config/firebaseConfig';
+import Toast from 'react-native-toast-message';
+
 
 
 const login = () => {
@@ -21,19 +23,31 @@ const login = () => {
     // Login Authentication
     const handleLoginPress = async () => {
         if (!validateEmail(value.email)) {
-            Alert.alert("Invalid Email format");
+            Toast.show({
+                type: 'error',
+                text1: 'Invalid Email',
+                text2: 'Please enter a valid email address.'
+            });
             return;
         }
 
         if (!validatePassword(value.password)) {
-            Alert.alert("Invalid Password");
-            return;
+            Toast.show({
+                type: 'error',
+                text1: 'Invalid Password',
+                text2: 'Password must be at least 8 characters long.'
+            });
         }
 
         if (value.email === "" || value.password === "") {
             setValue({
                 ...value,
                 error: "Email or password cannot be empty.",
+            });
+            Toast.show({
+                type: 'error',
+                text1: 'Missing Credentials',
+                text2: 'Email or password cannot be empty.',
             });
             return;
         }
@@ -47,17 +61,32 @@ const login = () => {
                     //user signed in
                     const user = userCredential.user;
                     console.log("Hello! :" + user)
-                    Alert.alert("You're authenticated!")
+                    Toast.show({
+                        type: 'success',
+                        text1: 'Login Successful',
+                        text2: 'Welcome back!'
+                    });
+                    // Redirect user to the main page after successful login
+                    router.push('/(tabs)/usr_home')
                 })
                 .catch((err) => {
-                    if(err.code ===  AuthErrorCodes.INVALID_PASSWORD ||err.code === AuthErrorCodes.USER_DELETED) {
+                    if(err.code ===  AuthErrorCodes.INVALID_PASSWORD || err.code === AuthErrorCodes.USER_DELETED) {
                         setValue({
                             ...value,
                             error: "The email address or password is incorrect"
                         })
+                        Toast.show({
+                            type: 'error',
+                            text1: 'Invalid Credentials',
+                            text2: 'The email address or password is incorrect.'
+                        })
                     } else {
                         console.log(err.code);
-                        alert(err.code);
+                        Toast.show({
+                            type: 'error',
+                            text1: 'Something went wrong...',
+                            text2: err.message,
+                        })
                     }
                 });
 
@@ -65,6 +94,11 @@ const login = () => {
             setValue({
                 ...value,
                 error: error instanceof Error ? error.message : 'An unknown error occurred',
+            });
+            Toast.show({
+                type: 'error',
+                text1: 'Error',
+                text2: value.error,
             });
         } finally {
             // Stop submitting

@@ -12,7 +12,16 @@ const Tabs_layout = () => {
             headerShown: false
         }}
         />
+
+        <Stack.Screen
+          name="usr_home"
+          options={{
+            headerShown: false
+        }}
+        />
       </Stack>
+
+
 
       <StatusBar backgroundColor='#161622' style="light" />
     </>
