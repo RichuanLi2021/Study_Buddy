@@ -6,7 +6,7 @@ export default function App() {
   return (
     <View className="flex-1 items-center justify-center bg-white">
 
-      <Text className="text-3xl" style={{fontFamily: 'chilispepper'}}>This is the homepage</Text>
+      <Text className="text-4xl" style={{fontFamily: 'chilispepper'}}>Study Buddy</Text>
       <StatusBar style="auto" />
       <Link href="/(tabs)/usr_profile" 
             style={{fontSize: 28,
