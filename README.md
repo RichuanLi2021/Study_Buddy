@@ -80,7 +80,12 @@ if it is above version 3.3.2, you need to downgrade it to 3.3.2 by doing:
 npm install tailwindcss@3.3.2 --save-dev
 ```
 
-2. Other issues with missing module in node_modules
+2. tailwindcss configuration can be found at:
+* [TextColor](https://tailwindcss.com/docs/text-color) 
+* [BackgroundColor](https://tailwindcss.com/docs/background-color)
+* [NativeWind](https://www.nativewind.dev/overview/)
+
+3. Other issues with missing module in node_modules
 
 Check the correcponding module or dependencies, make sure they are installed.
 

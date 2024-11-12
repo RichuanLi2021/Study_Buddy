@@ -1,5 +1,4 @@
-import { Stack, Tabs} from 'expo-router'
-import FontAwesome from '@expo/vector-icons/FontAwesome'
+import {Tabs} from 'expo-router'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { StatusBar } from 'expo-status-bar'

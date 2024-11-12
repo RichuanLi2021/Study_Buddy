@@ -1,5 +1,6 @@
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
+import Toast from 'react-native-toast-message'
 
 const Auth_Layout = () => {
   return (
@@ -30,7 +31,10 @@ const Auth_Layout = () => {
           }}/>
       </Stack>
 
+      <Toast/>
+
       <StatusBar backgroundColor='#000' style="dark" />
+
     </>
   )
 }

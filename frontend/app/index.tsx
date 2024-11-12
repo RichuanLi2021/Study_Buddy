@@ -1,6 +1,7 @@
 import { Text, View} from "react-native";
 import { StatusBar } from 'expo-status-bar';
 import { Link} from "expo-router";
+import Toast from "react-native-toast-message";
 
 export default function App() {
   return (
@@ -25,6 +26,8 @@ export default function App() {
             }}>
             Go to Signup
         </Link>
+
+        <Toast/>
     </View>
   );
 }
