@@ -67,7 +67,7 @@ const Signup = () => {
 
   return (
     <SafeAreaView
-      className='bg-slate-300 h-full'
+      className='bg-orange-50 h-full'
       style={{
         flex: 1,
         justifyContent: "center",

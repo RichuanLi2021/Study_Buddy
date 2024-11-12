@@ -12,14 +12,14 @@ interface FormEditProfile extends TextInputProps {
 }
 
 // Accept the props in the FormLogin component
-const FormEditProfile: React.FC<FormEditProfileProps> = ({
+const FormEditProfile = ({
      title,
      value,
      handleChangeText,
      otherStyles,
      keyboardType='default',
      ...props
-    }) => {
+    }: FormEditProfile) => {
     return (
         <View className='space-y-2' style={[{ marginTop: 7 }, otherStyles]}>
             <Text style={{color: 'black', fontWeight: 700}}>{title}</Text>

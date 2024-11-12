@@ -37,7 +37,7 @@ const FormLogin = ({
                     style={{ 
                         borderWidth: 1, 
                         borderColor: '#ccc', 
-                        padding: 7, 
+                        padding: 14, 
                         borderRadius: 14,
                         paddingRight: 40, // Add space for the icon
                     }}

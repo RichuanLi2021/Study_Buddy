@@ -28,6 +28,7 @@ const login = () => {
                 text1: 'Invalid Email',
                 text2: 'Please enter a valid email address.'
             });
+            console.log('toast loaded')
             return;
         }
 
@@ -39,7 +40,7 @@ const login = () => {
             });
         }
 
-        if (value.email === "" || value.password === "") {
+        if (value.email === null || value.password === null) {
             setValue({
                 ...value,
                 error: "Email or password cannot be empty.",
@@ -64,7 +65,9 @@ const login = () => {
                     Toast.show({
                         type: 'success',
                         text1: 'Login Successful',
-                        text2: 'Welcome back!'
+                        text2: 'Welcome back!',
+                        position: 'bottom',
+                        bottomOffset: 40
                     });
                     // Redirect user to the main page after successful login
                     router.push('/(tabs)/usr_home')
@@ -77,8 +80,7 @@ const login = () => {
                         })
                         Toast.show({
                             type: 'error',
-                            text1: 'Invalid Credentials',
-                            text2: 'The email address or password is incorrect.'
+                            text1: value.error,
                         })
                     } else {
                         console.log(err.code);
@@ -111,7 +113,7 @@ const login = () => {
 
     return (
         <SafeAreaView
-            className="bg-slate-300 h-full"
+            className="bg-orange-50 h-full"
             style={{
                 flex: 1,
                 justifyContent: "center",
@@ -131,7 +133,7 @@ const login = () => {
                                 color: '#FF7900',
                                 fontWeight: 700,
                             }}> 
-                                Log into Study-buddy
+                                Welcome!
                         </Text>
 
                     {/* Enter email */}
@@ -175,7 +177,7 @@ const login = () => {
                                 Don't have an account? 
                             </Text>
                             <Link 
-                                href='/sign-up' 
+                                href='/(auth_onBoardings)/sign-up' 
                                 className='text-base font-extrabold text-orange-500'
                                 style={{                                                       
                                 color: 'blue',
