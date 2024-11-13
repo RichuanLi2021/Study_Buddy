@@ -6,12 +6,9 @@ A cross-platform (IOS and Android) mobile app that enables students to find ones
 
 ### Pre-requisites (Tech Stack involved)
 
-* Command Line Tools
+* Tools
 * [GitBash](https://git-scm.com/downloads) (Windows only)
 * [Terminal](Mac laptop)
-* [React.native](https://reactnative.dev/docs/environment-setup)  
-* [Node.js](https://nodejs.org/en/) the app server
-* [NPM](https://www.npmjs.com/)
 
 * IDE required: VS Code (Development), Android Studio (Build, test, simulator), Apple XCode (Build, test, simulator)
 
@@ -19,7 +16,8 @@ A cross-platform (IOS and Android) mobile app that enables students to find ones
 * [React Native](https://reactnative.dev/docs/set-up-your-environment?platform=android)
 * [Expo](https://docs.expo.dev/get-started/next-steps/)
 * [Expo CLI](https://docs.expo.dev/more/expo-cli/)
-
+* [Node.js](https://nodejs.org/en/) the app server
+* [NPM](https://www.npmjs.com/)
 ```
 React native is for both IOS and Android development
 Make sure you have node version 18.18 or higher
@@ -29,21 +27,6 @@ Make sure you have node version 18.18 or higher
 Install java development kit
 1. brew install --cask zulu@17
 2. brew info --cask zulu@17
-```
-
-### Troubleshooting Expo project
-```
-run "npx expo-doctor"
-```
-* This command will scan over your expo project for any issues related to the config, dependencies compatiblity, and other environment issues.
-
-```
-npx expo start -c
-```
-* Run this command to clear the cache and restart expo to make sure there is no leftover issues.
-
-```
-
 ```
 
 ### Installation
@@ -82,9 +65,18 @@ create a copy of .env.sample, and then rename it to .env
 Grab the environment from firebase/project setting/General
 
 copy the corresponding value and paste into the empty quotes in .env file.
+```
 
+### Troubleshooting Expo project
+```
+run "npx expo-doctor"
+```
+* This command will scan over your expo project for any issues related to the config, dependencies compatiblity, and other environment issues.
 
 ```
+npx expo start -c
+```
+* Run this command to clear the cache and restart expo to make sure there is no leftover issues.
 
 ### Issues with tailwind version
 1. if you receive the Error: "Use process(css).then(cb) to work with async plugins"
@@ -125,9 +117,8 @@ npm cache clean --force
 
 ### Issues with ATS using secure network connection
 
-* Set NSAllowArbitraryLoads to <true/>
+* Set NSAllowArbitraryLoads to true.
 * Disconnect from the wifi if issue peristes, which could be the cause of firewall of the network such as Dal's network, which has strict firewall setting.
-* 
 
 
 ### Issues with dependencies and packages in package.json
