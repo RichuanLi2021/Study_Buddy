@@ -10,8 +10,6 @@ import { auth } from '@/config/firebaseConfig';
 import Toast from 'react-native-toast-message';
 import Errors from '@/components/error_message/form_error';
 
-
-
 const login = () => {
     const [value, setValue] = useState({
         email: "",
@@ -55,19 +53,6 @@ const login = () => {
         validateForm();
     }, [value.email, value.password, value.touched.email, value.touched.password]);
 
-
-    // Confirm if the user has touched the form or not.
-    // const handleBlur = (field: string) => {
-    //     setValue((prev) => ({
-    //         ...prev,
-    //         touched: {
-    //             ...prev.touched,
-    //             [field]: true,
-    //         },
-    //     }));
-    // };
-    
-
     //Form validation
     const validateForm = () => {
         let errors: Errors = {};
@@ -75,7 +60,6 @@ const login = () => {
         if(!value.touched.email && !value.touched.password){
             return;
         }
-
 
         //Validate Email
         if(value.touched.email){
@@ -102,18 +86,12 @@ const login = () => {
         }))
 
         let errorList = Object.keys(errors);
-        //update form state
-        
+        //update form state    
             setValue((prev)=>({
                 ...prev,
                 isFormValid: errorList.length === 0
             }))
-    }
-
-    //For testing purposes.
-    console.log("\n")
-    console.log(Object.keys(value.touched).join(" ") + ": " + Object.values(value.touched).join(" "))
-    console.log("current errors: " + Object.values(value.error).length)
+        }
     
     // Login Authentication
     const handleLoginPress = async () => {
@@ -209,24 +187,17 @@ const login = () => {
                         title="Email"
                         value={value.email}
                         handleChangeText={handleEmailChange}
-                        // onBlur={()=> handleBlur('email')}
                         otherStyles={{ marginTop: 7 }}
                         keyboardType="email-address"
                     />
-
-                        {<Text>Current email is: {value.email}</Text>}
 
                     {/* Enter password */}
                     <FormLogin
                         title="Password"
                         value={value.password}
                         handleChangeText={handlePasswordChange}
-                        // onBlur={()=> handleBlur('password')}
                         otherStyles={{ marginTop: 7 }}
                     />
-
-                        {<Text>Current password is: {value.password}</Text>}
-                    
 
                     {/* Display error message */}
                     {(value.touched.email || value.touched.password) && Object.values(value.error).length > 0 && (
