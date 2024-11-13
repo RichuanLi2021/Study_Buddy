@@ -10,8 +10,6 @@ import { auth } from '@/config/firebaseConfig';
 import Toast from 'react-native-toast-message';
 import Errors from '@/components/error_message/form_error';
 
-
-
 const login = () => {
     const [value, setValue] = useState({
         email: "",
@@ -26,44 +24,59 @@ const login = () => {
 
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    // Handler for email field
+    const handleEmailChange = (usrEmail: string) => {
+        setValue((prev) => ({
+        ...prev,
+        email: usrEmail,
+        touched: {
+            ...prev.touched,
+            email: true,
+        },
+        }));
+    };
+  
+    // Handler for password field
+    const handlePasswordChange = (usrPassword: string) => {
+        setValue((prev) => ({
+        ...prev,
+        password: usrPassword,
+        touched: {
+            ...prev.touched,
+            password: true,
+        },
+        }));
+    };
+
     // Trigger form validation when any form value changes
     useEffect(()=>{
         validateForm();
-    }, [value.email, value.password]);
-
-
-    // Confirm if the user has touched the form or not.
-    const handleBlur = (field: string) => {
-        setValue((prev) => ({
-            ...prev,
-            touched: {
-                ...prev.touched,
-                [field]: true,
-            },
-        }));
-    };
-    
+    }, [value.email, value.password, value.touched.email, value.touched.password]);
 
     //Form validation
     const validateForm = () => {
         let errors: Errors = {};
 
-        if(!value.touched.email || !value.touched.password){
+        if(!value.touched.email && !value.touched.password){
             return;
         }
 
         //Validate Email
-        if(value.email.length === 0){
-            errors.email = "email is required"
-        } else if(!validateEmail(value.email) ){
-            errors.email = "email is invalid"
+        if(value.touched.email){
+            if(value.email.length === 0){
+                errors.email = "email is required"
+            } else if(!validateEmail(value.email) ){
+                errors.email = "email is invalid"
+            }
         }
 
         //Validate password
-        if(value.password.length === 0){
-            errors.password = "password is required"
-        } else if(!validatePassword(value.password) ){
-            errors.password = "Password is invalid"
+        if(value.touched.password){
+            if(value.password.length === 0){
+                errors.password = "password is required"
+            } else if(!validatePassword(value.password) ){
+                errors.password = "Password is invalid"
+            }
         }
 
         //Initialize error
@@ -73,18 +86,12 @@ const login = () => {
         }))
 
         let errorList = Object.keys(errors);
-        //update form state
-        
+        //update form state    
             setValue((prev)=>({
                 ...prev,
                 isFormValid: errorList.length === 0
             }))
-    }
-
-    //For testing purposes.
-    console.log("\n")
-    console.log(Object.keys(value.touched).join(" ") + ": " + Object.values(value.touched).join(" "))
-    console.log("current errors: " + Object.values(value.error).length)
+        }
     
     // Login Authentication
     const handleLoginPress = async () => {
@@ -179,22 +186,16 @@ const login = () => {
                     <FormLogin
                         title="Email"
                         value={value.email}
-                        handleChangeText={(usrEmail) =>
-                            setValue({ ...value, email: usrEmail })
-                        }
+                        handleChangeText={handleEmailChange}
                         otherStyles={{ marginTop: 7 }}
                         keyboardType="email-address"
-                        onBlur={()=> handleBlur('email')}
                     />
 
                     {/* Enter password */}
                     <FormLogin
                         title="Password"
                         value={value.password}
-                        handleChangeText={(usrPassword) =>
-                            setValue({ ...value, password: usrPassword })
-                        }
-                        onBlur={()=> handleBlur('password')}
+                        handleChangeText={handlePasswordChange}
                         otherStyles={{ marginTop: 7 }}
                     />
 

@@ -7,7 +7,6 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 interface FormLoginProps extends TextInputProps {
   title: string;
   value: string;
-  isPasswordVisible?: boolean;
   handleChangeText: (text: string) => void;
   otherStyles?: StyleProp<TextStyle>;
   keyboardType?: 'default' | 'email-address' | 'numeric' | 'phone-pad';
@@ -17,7 +16,6 @@ interface FormLoginProps extends TextInputProps {
 const FormLogin = ({
      title,
      value, 
-     isPasswordVisible,
      handleChangeText, 
      otherStyles, 
      keyboardType='default',
