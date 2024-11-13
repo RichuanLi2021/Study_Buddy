@@ -32,6 +32,7 @@ const config: ExpoConfig = {
   },
   plugins: [
     'expo-router',
+    'expo-font'
   ],
   experiments: {
     typedRoutes: true,

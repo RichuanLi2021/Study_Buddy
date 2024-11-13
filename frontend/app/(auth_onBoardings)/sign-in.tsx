@@ -48,36 +48,43 @@ const login = () => {
     const validateForm = () => {
         let errors: Errors = {};
 
+        if(!value.touched.email || !value.touched.password){
+            return;
+        }
+
         //Validate Email
         if(value.email.length === 0){
             errors.email = "email is required"
-        } else if(!validateEmail(value.email)){
+        } else if(!validateEmail(value.email) ){
             errors.email = "email is invalid"
         }
 
         //Validate password
         if(value.password.length === 0){
             errors.password = "password is required"
-        } else if(!validatePassword(value.password)){
+        } else if(!validatePassword(value.password) ){
             errors.password = "Password is invalid"
         }
 
+        //Initialize error
         setValue((prev)=>({
             ...prev,
             error: errors
         }))
 
-        // for (let n = 0; n < Object.keys(value.error).length; n++){
-        //     console.log("errors are: "+ Object.values(value.error));
-        // }
-
         let errorList = Object.keys(errors);
         //update form state
-        setValue((prev)=>({
-            ...prev,
-            isFormValid: errorList.length === 0
-        }))
+        
+            setValue((prev)=>({
+                ...prev,
+                isFormValid: errorList.length === 0
+            }))
     }
+
+    //For testing purposes.
+    console.log("\n")
+    console.log(Object.keys(value.touched).join(" ") + ": " + Object.values(value.touched).join(" "))
+    console.log("current errors: " + Object.values(value.error).length)
     
     // Login Authentication
     const handleLoginPress = async () => {
@@ -123,7 +130,7 @@ const login = () => {
                             console.log(err.code);
                             Toast.show({
                                 type: 'error',
-                                text1: 'You are not registered',
+                                text1: 'Check your email and password',
                                 text2: err.message,
                                 position: 'bottom',
                                 bottomOffset: 100
@@ -220,7 +227,7 @@ const login = () => {
                                 textDecorationLine: 'underline',
                                 
                                  }}> 
-                                Sign-up now
+                                Create one
                             </Link>
                         </View>
                 </View>

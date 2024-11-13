@@ -11,6 +11,10 @@ npm-debug.*
 web-build/
 expo-env.d.ts
 
+# Dependencies
+package.json
+package-lock.json
+
 # Environment Variables
 .env
 
@@ -22,3 +26,4 @@ expo-env.d.ts
 
 expo-env.d.ts
 # @end expo-cli
+

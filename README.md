@@ -31,6 +31,21 @@ Install java development kit
 2. brew info --cask zulu@17
 ```
 
+### Troubleshooting Expo project
+```
+run "npx expo-doctor"
+```
+* This command will scan over your expo project for any issues related to the config, dependencies compatiblity, and other environment issues.
+
+```
+npx expo start -c
+```
+* Run this command to clear the cache and restart expo to make sure there is no leftover issues.
+
+```
+
+```
+
 ### Installation
 
 1. Clone the repository
@@ -74,11 +89,16 @@ copy the corresponding value and paste into the empty quotes in .env file.
 ### Issues with tailwind version
 1. if you receive the Error: "Use process(css).then(cb) to work with async plugins"
 Check the version of installed tailwindcss in package.json
-if it is above version 3.3.2, you need to downgrade it to 3.3.2 by doing:
+if it is above version 3.3.2, you need to downgrade it to 3.3.2
+nativewind version has to be v2.0.11:
 
 ```
 npm install tailwindcss@3.3.2 --save-dev
+
+npm install nativewind@2.0.11
 ```
+
+* npm list nativewind run this command to check if there are mutiple version installed.
 
 2. tailwindcss configuration can be found at:
 * [TextColor](https://tailwindcss.com/docs/text-color) 
@@ -93,10 +113,29 @@ Check the correcponding module or dependencies, make sure they are installed.
 npm list dependency_name (e.g.,tailwindcss postcss autoprefixer)
 ```
 
-Otherwise, re-install, or re-install your node module by doing:
+Otherwise, re-install, or re-install your node modules and then clear the cache:
 
 ```
 rm -rf node_modules
 rm package-lock.json
 npm install
+
+npm cache clean --force
 ```
+
+### Issues with ATS using secure network connection
+
+* Set NSAllowArbitraryLoads to <true/>
+* Disconnect from the wifi if issue peristes, which could be the cause of firewall of the network such as Dal's network, which has strict firewall setting.
+* 
+
+
+### Issues with dependencies and packages in package.json
+* Some issues i have noticed by far are:
+1. The versions of dependencies in package.json can be different from the actual installed.
+
+2. Update or downgrade of dependencies can cause the collapse of project because of compatability in terms of different dependencies.
+
+3. Check the actual version of dependencies: npm ls + name of the dependency
+
+4. Disable auto-update by removing "^" and "~" for the dependency that you want to lock.
