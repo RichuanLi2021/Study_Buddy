@@ -6,6 +6,7 @@ interface CustomButtonProps extends TouchableOpacityProps {
     handlePress: () => void;
     buttonStyle?: StyleProp<ViewStyle>;
     isLoading: boolean;
+    disabled?: boolean;
 }
 
 const CustomButton = ({
@@ -13,6 +14,7 @@ const CustomButton = ({
     handlePress,
     buttonStyle,
     isLoading,
+    disabled,
     ...props
 }: CustomButtonProps) => {
     return (
@@ -26,12 +28,13 @@ const CustomButton = ({
             },
                 buttonStyle,
             ]}
-            onPress={handlePress}
+            onPress={disabled? undefined : handlePress}
             activeOpacity={0.7}
+            disabled={disabled}
             {...props}
         >
             <Text style={{
-                color: '#000',
+                color: disabled ? '#666' : '#000',
                 fontWeight: 'bold',
                 fontSize: 18,
             }}>

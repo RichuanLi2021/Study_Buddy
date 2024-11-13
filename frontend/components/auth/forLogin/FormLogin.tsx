@@ -1,11 +1,13 @@
 // Define the props type for FormLogin
-import { View, Text, TextInput, TextStyle, StyleProp, TextInputProps } from 'react-native'
+import { View, Text, TextInput, TextStyle, StyleProp, TextInputProps, TouchableOpacity } from 'react-native'
 import { useState } from 'react'
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // Define the interface for the props
 interface FormLoginProps extends TextInputProps {
   title: string;
   value: string;
+  isPasswordVisible?: boolean;
   handleChangeText: (text: string) => void;
   otherStyles?: StyleProp<TextStyle>;
   keyboardType?: 'default' | 'email-address' | 'numeric' | 'phone-pad';
@@ -15,6 +17,7 @@ interface FormLoginProps extends TextInputProps {
 const FormLogin = ({
      title,
      value, 
+     isPasswordVisible,
      handleChangeText, 
      otherStyles, 
      keyboardType='default',
@@ -34,12 +37,31 @@ const FormLogin = ({
                     style={{ 
                         borderWidth: 1, 
                         borderColor: '#ccc', 
-                        padding: 7, 
-                        borderRadius: 14 
+                        padding: 14, 
+                        borderRadius: 14,
+                        paddingRight: 40, // Add space for the icon
                     }}
-                    secureTextEntry={title==="password" && showPassword}
+                    secureTextEntry={title.toLowerCase() === 'password' && !showPassword}
                     keyboardType={keyboardType}
+                    {...props}
                 />
+                {title.toLowerCase() === 'password' && (
+                <TouchableOpacity
+                    onPress={() => setShowPassword(!showPassword)}
+                    style={{
+                    position: 'absolute',
+                    right: 10,
+                    top: '50%',
+                    transform: [{ translateY: -12 }], // Center the icon vertically
+                    }}
+                    >
+                    <Icon
+                    name={showPassword ? 'eye-off' : 'eye'}
+                    size={24}
+                    color='gray'
+                    />
+                </TouchableOpacity>
+                )}
             </View>
         </View>
   )

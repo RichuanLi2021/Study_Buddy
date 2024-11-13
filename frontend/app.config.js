@@ -15,9 +15,12 @@ export default {
       "backgroundColor": "#ffffff"
     },
     "ios": {
+      // "bundleIdentifier": "com.test.test",
+      "bundleIdentifier": "com.karl2021.frontend",
       "supportsTablet": true,
     },
     "android": {
+      "package": "com.karl2021.frontend",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"

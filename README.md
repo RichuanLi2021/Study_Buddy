@@ -6,12 +6,9 @@ A cross-platform (IOS and Android) mobile app that enables students to find ones
 
 ### Pre-requisites (Tech Stack involved)
 
-* Command Line Tools
+* Tools
 * [GitBash](https://git-scm.com/downloads) (Windows only)
 * [Terminal](Mac laptop)
-* [React.native](https://reactnative.dev/docs/environment-setup)  
-* [Node.js](https://nodejs.org/en/) the app server
-* [NPM](https://www.npmjs.com/)
 
 * IDE required: VS Code (Development), Android Studio (Build, test, simulator), Apple XCode (Build, test, simulator)
 
@@ -19,7 +16,8 @@ A cross-platform (IOS and Android) mobile app that enables students to find ones
 * [React Native](https://reactnative.dev/docs/set-up-your-environment?platform=android)
 * [Expo](https://docs.expo.dev/get-started/next-steps/)
 * [Expo CLI](https://docs.expo.dev/more/expo-cli/)
-
+* [Node.js](https://nodejs.org/en/) the app server
+* [NPM](https://www.npmjs.com/)
 ```
 React native is for both IOS and Android development
 Make sure you have node version 18.18 or higher
@@ -67,20 +65,39 @@ create a copy of .env.sample, and then rename it to .env
 Grab the environment from firebase/project setting/General
 
 copy the corresponding value and paste into the empty quotes in .env file.
+```
 
+### Troubleshooting Expo project
+```
+run "npx expo-doctor"
+```
+* This command will scan over your expo project for any issues related to the config, dependencies compatiblity, and other environment issues.
 
 ```
+npx expo start -c
+```
+* Run this command to clear the cache and restart expo to make sure there is no leftover issues.
 
 ### Issues with tailwind version
 1. if you receive the Error: "Use process(css).then(cb) to work with async plugins"
 Check the version of installed tailwindcss in package.json
-if it is above version 3.3.2, you need to downgrade it to 3.3.2 by doing:
+if it is above version 3.3.2, you need to downgrade it to 3.3.2
+nativewind version has to be v2.0.11:
 
 ```
 npm install tailwindcss@3.3.2 --save-dev
+
+npm install nativewind@2.0.11
 ```
 
-2. Other issues with missing module in node_modules
+* npm list nativewind run this command to check if there are mutiple version installed.
+
+2. tailwindcss configuration can be found at:
+* [TextColor](https://tailwindcss.com/docs/text-color) 
+* [BackgroundColor](https://tailwindcss.com/docs/background-color)
+* [NativeWind](https://www.nativewind.dev/overview/)
+
+3. Other issues with missing module in node_modules
 
 Check the correcponding module or dependencies, make sure they are installed.
 
@@ -88,10 +105,28 @@ Check the correcponding module or dependencies, make sure they are installed.
 npm list dependency_name (e.g.,tailwindcss postcss autoprefixer)
 ```
 
-Otherwise, re-install, or re-install your node module by doing:
+Otherwise, re-install, or re-install your node modules and then clear the cache:
 
 ```
 rm -rf node_modules
 rm package-lock.json
 npm install
+
+npm cache clean --force
 ```
+
+### Issues with ATS using secure network connection
+
+* Set NSAllowArbitraryLoads to true.
+* Disconnect from the wifi if issue peristes, which could be the cause of firewall of the network such as Dal's network, which has strict firewall setting.
+
+
+### Issues with dependencies and packages in package.json
+* Some issues i have noticed by far are:
+1. The versions of dependencies in package.json can be different from the actual installed.
+
+2. Update or downgrade of dependencies can cause the collapse of project because of compatability in terms of different dependencies.
+
+3. Check the actual version of dependencies: npm ls + name of the dependency
+
+4. Disable auto-update by removing "^" and "~" for the dependency that you want to lock.

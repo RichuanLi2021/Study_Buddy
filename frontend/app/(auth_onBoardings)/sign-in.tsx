@@ -1,83 +1,158 @@
-import { View, Text, Alert, ScrollView} from 'react-native';
-import { useState } from 'react';
+import { View, Text, ScrollView} from 'react-native';
+import { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { Link } from 'expo-router';
+import { Link, router } from 'expo-router';
 import FormLogin from '@/components/auth/forLogin/FormLogin';
 import CustomButton from '@/components/auth/button/buttons';
 import { validateEmail, validatePassword } from '@/components/auth/InputValidation/Input_validation';
 import { AuthErrorCodes, signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/config/firebaseConfig';
+import Toast from 'react-native-toast-message';
+import Errors from '@/components/error_message/form_error';
+
 
 
 const login = () => {
     const [value, setValue] = useState({
         email: "",
         password: "",
-        error: "",
+        error: {},
+        isFormValid: false,
+        touched: {
+            email: false,
+            password: false,
+        },
     });
 
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    // Trigger form validation when any form value changes
+    useEffect(()=>{
+        validateForm();
+    }, [value.email, value.password]);
+
+
+    // Confirm if the user has touched the form or not.
+    const handleBlur = (field: string) => {
+        setValue((prev) => ({
+            ...prev,
+            touched: {
+                ...prev.touched,
+                [field]: true,
+            },
+        }));
+    };
+    
+
+    //Form validation
+    const validateForm = () => {
+        let errors: Errors = {};
+
+        if(!value.touched.email || !value.touched.password){
+            return;
+        }
+
+        //Validate Email
+        if(value.email.length === 0){
+            errors.email = "email is required"
+        } else if(!validateEmail(value.email) ){
+            errors.email = "email is invalid"
+        }
+
+        //Validate password
+        if(value.password.length === 0){
+            errors.password = "password is required"
+        } else if(!validatePassword(value.password) ){
+            errors.password = "Password is invalid"
+        }
+
+        //Initialize error
+        setValue((prev)=>({
+            ...prev,
+            error: errors
+        }))
+
+        let errorList = Object.keys(errors);
+        //update form state
+        
+            setValue((prev)=>({
+                ...prev,
+                isFormValid: errorList.length === 0
+            }))
+    }
+
+    //For testing purposes.
+    console.log("\n")
+    console.log(Object.keys(value.touched).join(" ") + ": " + Object.values(value.touched).join(" "))
+    console.log("current errors: " + Object.values(value.error).length)
+    
     // Login Authentication
     const handleLoginPress = async () => {
-        if (!validateEmail(value.email)) {
-            Alert.alert("Invalid Email format");
+
+        if(!value.isFormValid){
+            Toast.show({
+                type: 'error',
+                text1: 'Invalid Form',
+                text2: 'Check your email and password to make sure they are correct'
+            })
             return;
+
+            setIsSubmitting(true);
         }
+            try {
+                // login user
+                await signInWithEmailAndPassword(auth, value.email, value.password)
+                    .then((userCredential)=> {
+                        //user signed in
+                        const user = userCredential.user;
+                        console.log("Hello! :" + user)
+                        Toast.show({
+                            type: 'success',
+                            text1: 'Login Successful',
+                            text2: 'Welcome back!',
+                            position: 'bottom',
+                            bottomOffset: 100
+                        });
 
-        if (!validatePassword(value.password)) {
-            Alert.alert("Invalid Password");
-            return;
-        }
-
-        if (value.email === "" || value.password === "") {
-            setValue({
-                ...value,
-                error: "Email or password cannot be empty.",
-            });
-            return;
-        }
-
-        setIsSubmitting(true);
-
-        try {
-            // login user
-            await signInWithEmailAndPassword(auth, value.email, value.password)
-                .then((userCredential)=> {
-                    //user signed in
-                    const user = userCredential.user;
-                    console.log("Hello! :" + user)
-                    Alert.alert("You're authenticated!")
-                })
-                .catch((err) => {
-                    if(err.code ===  AuthErrorCodes.INVALID_PASSWORD ||err.code === AuthErrorCodes.USER_DELETED) {
-                        setValue({
-                            ...value,
-                            error: "The email address or password is incorrect"
-                        })
-                    } else {
-                        console.log(err.code);
-                        alert(err.code);
-                    }
+                        // Pause the navigation to the next page to allow the toast to show
+                        setTimeout(() => {
+                            router.push('/(tabs)/usr_home');
+                        }, 2000);
+                    })
+                    .catch((err) => {
+                        if(err.code ===  AuthErrorCodes.INVALID_PASSWORD || err.code === AuthErrorCodes.USER_DELETED) {
+                            setValue({
+                                ...value,
+                                error: "The email address or password is incorrect"
+                            })
+                            return;
+                        } else {
+                            console.log(err.code);
+                            Toast.show({
+                                type: 'error',
+                                text1: 'Check your email and password',
+                                text2: err.message,
+                                position: 'bottom',
+                                bottomOffset: 100
+                            })
+                        }
+                    });
+    
+            } catch (error) {
+                setValue({
+                    ...value,
+                    error: error instanceof Error ? error.message : 'An unknown error occurred',
                 });
-
-        } catch (error) {
-            setValue({
-                ...value,
-                error: error instanceof Error ? error.message : 'An unknown error occurred',
-            });
-        } finally {
-            // Stop submitting
-            setIsSubmitting(false);
-        }
-    };
-
-    // Pass form data to backend endpoint for authentication
-    // ...
+               
+            } finally {
+                // Stop submitting
+                setIsSubmitting(false);
+            }
+        };
 
     return (
         <SafeAreaView
-            className="bg-slate-300 h-full"
+            className="bg-orange-50 h-full"
             style={{
                 flex: 1,
                 justifyContent: "center",
@@ -97,7 +172,7 @@ const login = () => {
                                 color: '#FF7900',
                                 fontWeight: 700,
                             }}> 
-                                Log into Study-buddy
+                                Welcome!
                         </Text>
 
                     {/* Enter email */}
@@ -109,6 +184,7 @@ const login = () => {
                         }
                         otherStyles={{ marginTop: 7 }}
                         keyboardType="email-address"
+                        onBlur={()=> handleBlur('email')}
                     />
 
                     {/* Enter password */}
@@ -118,30 +194,32 @@ const login = () => {
                         handleChangeText={(usrPassword) =>
                             setValue({ ...value, password: usrPassword })
                         }
+                        onBlur={()=> handleBlur('password')}
                         otherStyles={{ marginTop: 7 }}
                     />
 
                     {/* Display error message */}
-                    {value.error ? (
+                    {(value.touched.email || value.touched.password) && Object.values(value.error).length > 0 && (
                         <Text style={{ color: 'red', marginTop: 10 }}>
-                            {value.error}
+                            {Object.values(value.error).join("\n")}
                         </Text>
-                    ) : null}
+                    )}
 
                         {/* Login Button */}
                         <CustomButton
                             title="Login"
                             handlePress={handleLoginPress}
                             buttonStyle={{marginTop: 20}}
+                            disabled={!value.isFormValid}
                             isLoading={false}
                         />
 
                         <View className='justify-center pt-5 flex-row gap-2'>
-                            <Text className='text-base text-gray-50 font-normal'>
+                            <Text className='text-base text-red-950 font-normal'>
                                 Don't have an account? 
                             </Text>
                             <Link 
-                                href='/sign-up' 
+                                href='/(auth_onBoardings)/sign-up' 
                                 className='text-base font-extrabold text-orange-500'
                                 style={{                                                       
                                 color: 'blue',
@@ -149,7 +227,7 @@ const login = () => {
                                 textDecorationLine: 'underline',
                                 
                                  }}> 
-                                Sign-up now
+                                Create one
                             </Link>
                         </View>
                 </View>

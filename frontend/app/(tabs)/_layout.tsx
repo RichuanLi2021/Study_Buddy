@@ -1,21 +1,27 @@
-import { Stack } from 'expo-router'
+import {Tabs} from 'expo-router'
+import AntDesign from '@expo/vector-icons/AntDesign';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { StatusBar } from 'expo-status-bar'
 import React from 'react'
 
 const Tabs_layout = () => {
   return (
-    <>
-      <Stack>
-        <Stack.Screen
-          name="usr_profile"
-          options={{
-            headerShown: false
+    <Tabs screenOptions={{ tabBarActiveTintColor: 'blue' }}>
+      <Tabs.Screen
+        name = "usr_home"
+        options={{
+          title: 'Home',
+          tabBarIcon: () => <AntDesign name="home" size={24} color="black" />
+      }}
+      />
+      <Tabs.Screen
+        name="usr_profile"
+        options={{
+          title: 'Profile',
+          tabBarIcon: () => <MaterialCommunityIcons name="face-man-profile" size={24} color="black" />   
         }}
-        />
-      </Stack>
-
-      <StatusBar backgroundColor='#161622' style="light" />
-    </>
+      />
+    </Tabs>
   )
 }
 

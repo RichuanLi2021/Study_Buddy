@@ -16,13 +16,13 @@ interface SaveButtonProps extends TouchableOpacityProps {
     isLoading: boolean;
 }
 
-export const EditButton: React.FC<EditButtonProps> = ({
+export const EditButton = ({
     title,
     handlePress,
     buttonStyle,
     isLoading,
     ...props
-}) => {
+}: EditButtonProps) => {
     return (
         <TouchableOpacity
             style={[{
@@ -51,13 +51,13 @@ export const EditButton: React.FC<EditButtonProps> = ({
     );
 }
 
-export const SaveButton: React.FC<SaveButtonProps> = ({
+export const SaveButton = ({
     title,
     handlePress,
     buttonStyle,
     isLoading,
     ...props
-}) => {
+}: SaveButtonProps) => {
     return (
         <TouchableOpacity
             style={[{

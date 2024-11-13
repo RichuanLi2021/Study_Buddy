@@ -21,8 +21,21 @@ export default function RootLayout() {
   return (
 
     <Stack>
-      <Stack.Screen name="index" options={{headerShown: false}} />
+    {/* Configure the global header style if necessary
+      // screenOptions={{
+      //   headerStyle: {
+      //     backgroundColor: '#80ced6',
+      //   },
+      //   headerTintColor: '#fff',
+      //   headerTitleStyle: {
+      //     fontWeight: 'bold',
+      //   },
+      // }}>
+    */}
 
+      <Stack.Screen name="index" options={{headerShown: false}}/>
+      <Stack.Screen name="(auth_onBoardings)" options={{headerShown: false}}/>
+      <Stack.Screen name="(tabs)" options={{headerShown: false}}/>
     </Stack>
 
   )
