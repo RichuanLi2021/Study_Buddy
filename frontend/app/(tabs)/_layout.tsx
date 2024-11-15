@@ -1,12 +1,26 @@
 import {Tabs} from 'expo-router'
 import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { StatusBar } from 'expo-status-bar'
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import React from 'react'
 
 const Tabs_layout = () => {
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: 'blue' }}>
+    <Tabs screenOptions={{ tabBarActiveTintColor: 'blue',
+      headerShadowVisible: false,
+      headerStyle: {
+        borderBottomWidth: 0,
+        elevation: 0,
+      },
+     }}>
+
+      <Tabs.Screen
+        name = "usr_card"
+        options={{
+          title: 'WeMit',
+          tabBarIcon: () => <FontAwesome5 name="user-friends" size={24} color="black" />
+      }}
+      />
       <Tabs.Screen
         name = "usr_home"
         options={{

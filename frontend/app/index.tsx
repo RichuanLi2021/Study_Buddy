@@ -27,6 +27,15 @@ export default function App() {
             Go to Signup
         </Link>
 
+        <Link 
+            href="/(tabs)/usr_card" 
+            style={{fontSize: 28,
+            color: '#FF7900',
+            fontWeight: 700
+            }}>
+            usr cards
+        </Link>
+
         <Toast/>
     </View>
   );
