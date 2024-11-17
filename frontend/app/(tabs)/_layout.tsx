@@ -6,7 +6,9 @@ import React from 'react'
 
 const Tabs_layout = () => {
   return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: 'blue',
+    <Tabs 
+      screenOptions={{ 
+      tabBarActiveTintColor: 'blue',
       headerShadowVisible: false,
       headerStyle: {
         borderBottomWidth: 0,
@@ -15,7 +17,7 @@ const Tabs_layout = () => {
      }}>
 
       <Tabs.Screen
-        name = "usr_card"
+        name = "usr_match"
         options={{
           title: 'WeMit',
           tabBarIcon: () => <FontAwesome5 name="user-friends" size={24} color="black" />

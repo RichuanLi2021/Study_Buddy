@@ -10,11 +10,13 @@ const Auth_Layout = () => {
           headerStyle: {
             backgroundColor: 'rgb(255 247 237)',
           },
+          headerShadowVisible: false,
           headerTintColor: '#000',
           headerTitleStyle: {
             fontWeight: 'bold',
           },
-        }}>
+        }}
+        >
 
         <Stack.Screen
           name="sign-in"

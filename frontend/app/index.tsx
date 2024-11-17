@@ -28,12 +28,12 @@ export default function App() {
         </Link>
 
         <Link 
-            href="/(tabs)/usr_card" 
+            href="/(tabs)/usr_match" 
             style={{fontSize: 28,
             color: '#FF7900',
             fontWeight: 700
             }}>
-            usr cards
+            usr match
         </Link>
 
         <Toast/>

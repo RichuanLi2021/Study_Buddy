@@ -130,3 +130,12 @@ npm cache clean --force
 3. Check the actual version of dependencies: npm ls + name of the dependency
 
 4. Disable auto-update by removing "^" and "~" for the dependency that you want to lock.
+
+
+### Styling debug with devTools
+
+```
+npm install -g react-devtools
+
+react-devtools
+```
