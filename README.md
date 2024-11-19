@@ -67,6 +67,40 @@ Grab the environment from firebase/project setting/General
 copy the corresponding value and paste into the empty quotes in .env file.
 ```
 
+
+5. ios & android build development
+ios and android modules have already been created, so do the following:
+
+For Android development build.
+```
+cd frontend/
+cd android/
+echo "sdk.dir=$HOME/Library/Android/sdk" > local.properties
+cd ..
+npx expo run:android
+```
+
+- if there are warnings, check if it is about: frontend/android/app/src/main/res/drawable-xhdpi/xxx_image 2.png: Resource and asset merger: ' ' is not a valid file-based resource name character: File-based resource names must contain only lowercase a-z, 0-9, or underscore.
+
+if so, cd android/app/src/main/res/drawable-xhdpi/
+delete any images with ending of 2 (e.g., splashscreen_image 2.png)
+
+- if warnings persist, run
+```
+rm -rf android
+npx expo prebuild
+cd android
+./gradlew clean
+cd ..
+npx expo run:android
+```
+
+For ios
+```
+cd frontend
+npx expo run:ios
+```
+
 ### Troubleshooting Expo project
 ```
 run "npx expo-doctor"
@@ -130,3 +164,12 @@ npm cache clean --force
 3. Check the actual version of dependencies: npm ls + name of the dependency
 
 4. Disable auto-update by removing "^" and "~" for the dependency that you want to lock.
+
+
+### Styling debug with devTools
+
+```
+npm install -g react-devtools
+
+react-devtools
+```
