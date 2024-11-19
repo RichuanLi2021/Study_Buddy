@@ -4,8 +4,19 @@ import RNPickerSelect from 'react-native-picker-select';
 import React, { useState } from 'react'
 import {EditButton, SaveButton} from '@/components/profile/button/buttons'
 import FormEditProfile from '@/components/profile/forEditProfile/FormEditProfile'
+import * as ImagePicker from 'expo-image-picker';
 
 const usr_profile = () => {
+    const [profilePicture, setProfilePicture] = useState(null);
+    const openGallery = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            allowsEditing: true,
+            quality: 1,
+          });
+      setProfilePicture(result.assets[0].uri);
+      console.log(result.assets[0].uri);
+    }
+
     {/* Initialize profile form variables */}
     const [form, setForm] = useState({
             name: "Your Name",
@@ -41,13 +52,21 @@ const usr_profile = () => {
 
             {/* Main profile info (image, name, phone) */}
             <View style={{flexDirection: 'row', height: 170}}>
-                {/* Profile picture (uses placeholder image icon.png from project directory) */}
-                <Image
-                    style={{
-                        //properties you entered are not compatible with type of StyleProp for ImageStyle
+                {/* Edit profile picture (not visible until edit button clicked) */}
+                <View style={{display: visible ? 'flex' : 'none'}}>
+                    {/* Button to choose a profile picture from device gallery */}
+                    <EditButton
+                        title="Change Profile Picture"
+                        onPress={openGallery}
+                        buttonStyle={{
+                            width: 170,
+                            height: 170,
+                            borderStyle: 'solid',
+                            borderWidth: 2,
+                            borderColor: 'black'
                         }}
-                    source={require('../../assets/images/icon.png')}
-                />
+                    />
+                </View>
 
                 {/* Edit main profile info forms (not visible until edit button clicked) */}
                 <View style={{display: visible ? 'flex' : 'none'}}>
@@ -67,6 +86,21 @@ const usr_profile = () => {
                         handleChangeText={(usrPhone) => setForm({...form, phone: usrPhone})}
                         otherStyles={{marginTop: 10, marginLeft: 10}}
                         keyboardType="phone-pad"
+                    />
+                </View>
+
+                {/* Display profile picture */}
+                <View style={{display: visible ? 'none' : 'flex'}}>
+                    {/* Profile picture */}
+                    <Image
+                    style={{
+                        width: 170,
+                        height: 170,
+                        borderStyle: 'solid',
+                        borderWidth: 2,
+                        borderColor: 'black'
+                        }}
+                    source={{uri:profilePicture}}
                     />
                 </View>
 
