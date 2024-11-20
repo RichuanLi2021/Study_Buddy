@@ -1,9 +1,12 @@
 import { View, Text, Image } from 'react-native'
 import { ScrollView } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {EditButton, SaveButton} from '@/components/profile/button/buttons'
 import FormEditProfile from '@/components/profile/forEditProfile/FormEditProfile'
+import { validateName, validatePhone, validateUniversity, validateMajor, validateYear } from '@/components/profile/InputValidation/Input_Validation'
+import Toast from 'react-native-toast-message';
+import Errors from '@/components/error_message/form_error';
 
 const usr_profile = () => {
     {/* Initialize profile form variables */}
@@ -13,15 +16,166 @@ const usr_profile = () => {
             university: "Your University",
             major: "Your Major",
             year: "Your Year",
-        },
-    )
+            studyPref: "",
+            studyTime: "",
+            studyDay: "",
+            error: {},
+            isFormValid: false,
+            touched: {
+                name: false,
+                phone: false,
+                university: false,
+                major: false,
+                year: false,
+            },
+        })
 
     {/* Initialize visible to false state */}
     const [visible, setVisible] = useState(false);
 
+    // Handler for name field
+    const handleNameChange = (usrName: string) => {
+        setForm((prev) => ({
+            ...prev,
+            name: usrName,
+            touched: {
+                ...prev.touched,
+                name: true,
+            },
+        }));
+    };
+
+    // Handler for phone field
+    const handlePhoneChange = (usrPhone: string) => {
+        setForm((prev) => ({
+            ...prev,
+            phone: usrPhone,
+            touched: {
+                ...prev.touched,
+                phone: true,
+            },
+        }));
+    };
+
+    // Handler for university field
+    const handleUniversityChange = (usrUniversity: string) => {
+        setForm((prev) => ({
+            ...prev,
+            university: usrUniversity,
+            touched: {
+                ...prev.touched,
+                university: true,
+            },
+        }));
+    };
+
+    // Handler for major field
+    const handleMajorChange = (usrMajor: string) => {
+        setForm((prev) => ({
+            ...prev,
+            major: usrMajor,
+            touched: {
+                ...prev.touched,
+                major: true,
+            },
+        }));
+    };
+
+    // Handler for year field
+    const handleYearChange = (usrYear: string) => {
+        setForm((prev) => ({
+            ...prev,
+            year: usrYear,
+            touched: {
+                ...prev.touched,
+                year: true,
+            },
+        }));
+    };
+
+    useEffect(()=>{
+        validateForm();
+    }, [form.name, form.phone, form.university, form.major, form.year, form.touched.name, form.touched.phone, form.touched.university, form.touched.major, form.touched.year]);
+
+    //Form validation
+    const validateForm = () => {
+        let errors: Errors = {};
+
+        //Validate name
+        if(form.touched.name){
+            if(form.name.length === 0){
+                errors.name = "Name is required"
+            } else if(!validateName(form.name) ){
+                errors.name = "Name is invalid"
+            }
+        }
+
+            //Validate phone
+            if(form.touched.phone){
+                if(form.phone.length === 0){
+                    errors.phone = "Phone number is required"
+                } else if(!validatePhone(form.phone) ){
+                    errors.phone = "Phone number is invalid"
+                }
+            }
+
+            //Validate university
+            if(form.touched.university){
+                if(form.phone.length === 0){
+                    errors.university = "University is required"
+                } else if(!validateUniversity(form.university) ){
+                    errors.university = "University is invalid"
+                }
+            }
+
+            //Validate major
+            if(form.touched.major){
+                if(form.major.length === 0){
+                    errors.major = "Major is required"
+                } else if(!validateMajor(form.major) ){
+                    errors.major = "Major is invalid"
+                }
+            }
+
+            //Validate year
+            if(form.touched.year){
+                if(form.year.length === 0){
+                    errors.year = "Year is required"
+                } else if(!validateYear(form.year) ){
+                    errors.year = "Year is invalid"
+                }
+            }
+
+        //Initialize error
+        setForm((prev)=>({
+            ...prev,
+            error: errors
+        }))
+
+        let errorList = Object.keys(errors);
+        //update form state
+        setForm((prev)=>({
+            ...prev,
+            isFormValid: errorList.length === 0
+        }))
+    }
+
     {/* Switch visible state when edit button clicked */}
     const handleEditPress = async () => {
         setVisible(!visible);
+        return;
+    }
+
+    const handleUpdatePress = async () => {
+        if(!form.isFormValid){
+            Toast.show({
+                type: 'error',
+                text1: 'Invalid Form',
+                text2: 'Check your form values to make sure they are correct'
+            })
+        } else {
+            setVisible(!visible);
+        }
         return;
     }
 
@@ -44,8 +198,12 @@ const usr_profile = () => {
                 {/* Profile picture (uses placeholder image icon.png from project directory) */}
                 <Image
                     style={{
-                        //properties you entered are not compatible with type of StyleProp for ImageStyle
-                        }}
+                        width: 170,
+                        height: 170,
+                        borderStyle: 'solid',
+                        borderWidth: 2,
+                        borderColor: 'black'
+                    }}
                     source={require('../../assets/images/icon.png')}
                 />
 
@@ -55,7 +213,7 @@ const usr_profile = () => {
                     <FormEditProfile
                         title="Name:"
                         value={form.name}
-                        handleChangeText={(usrName) => setForm({...form, name: usrName})}
+                        handleChangeText={handleNameChange}
                         otherStyles={{marginTop: 10, marginLeft: 10}}
                         keyboardType="default"
                     />
@@ -64,7 +222,7 @@ const usr_profile = () => {
                     <FormEditProfile
                         title="Phone:"
                         value={form.phone}
-                        handleChangeText={(usrPhone) => setForm({...form, phone: usrPhone})}
+                        handleChangeText={handlePhoneChange}
                         otherStyles={{marginTop: 10, marginLeft: 10}}
                         keyboardType="phone-pad"
                     />
@@ -85,7 +243,7 @@ const usr_profile = () => {
                 <FormEditProfile
                     title="University Name:"
                     value={form.university}
-                    handleChangeText={(usrUniversity) => setForm({...form, university: usrUniversity})}
+                    handleChangeText={handleUniversityChange}
                     otherStyles={{marginTop: 10}}
                     keyboardType="default"
                 />
@@ -94,7 +252,7 @@ const usr_profile = () => {
                 <FormEditProfile
                     title="Major:"
                     value={form.major}
-                    handleChangeText={(usrMajor) => setForm({...form, major: usrMajor})}
+                    handleChangeText={handleMajorChange}
                     otherStyles={{marginTop: 10}}
                     keyboardType="default"
                 />
@@ -103,7 +261,7 @@ const usr_profile = () => {
                 <FormEditProfile
                     title="Year:"
                     value={form.year}
-                    handleChangeText={(usrYear) => setForm({...form, year: usrYear})}
+                    handleChangeText={handleYearChange}
                     otherStyles={{marginTop: 10}}
                     keyboardType="default"
                 />
@@ -118,8 +276,8 @@ const usr_profile = () => {
                         label: 'Select a preference...',
                         value: null
                     }}
-                    onValueChange={(value) => console.log(value)}
-                    items={[{label: 'Quiet', value: 'quiet'}, {label: 'Collaborative', value: 'collaborative'}]}
+                    onValueChange={(value) => form.studyPref = value}
+                    items={[{label: 'Quiet', value: 'Quiet'}, {label: 'Collaborative', value: 'Collaborative'}]}
                 />
                 </View>
 
@@ -134,8 +292,8 @@ const usr_profile = () => {
                                 label: 'Select day...',
                                 value: null
                             }}
-                            onValueChange={(value) => console.log(value)}
-                            items={[{label: 'Monday', value: 'monday'}, {label: 'Tuesday', value: 'tuesday'}, {label: 'Wednesday', value: 'wednesday'}, {label: 'Thursday', value: 'thursday'}, {label: 'Friday', value: 'friday'}, {label: 'Saturday', value: 'saturday'}, {label: 'Sunday', value: 'sunday'}]}
+                            onValueChange={(value) => form.studyDay = value}
+                            items={[{label: 'Monday', value: 'Monday'}, {label: 'Tuesday', value: 'Tuesday'}, {label: 'Wednesday', value: 'Wednesday'}, {label: 'Thursday', value: 'Thursday'}, {label: 'Friday', value: 'Friday'}, {label: 'Saturday', value: 'Saturday'}, {label: 'Sunday', value: 'Sunday'}]}
                         />
                     </View>
 
@@ -147,7 +305,7 @@ const usr_profile = () => {
                                 label: 'Select time...',
                                 value: null
                             }}
-                            onValueChange={(value) => console.log(value)}
+                            onValueChange={(value) => form.studyTime = value}
                             items={[{label: 'Morning', value: 'morning'}, {label: 'Afternoon', value: 'afternoon'}, {label: 'Evening', value: 'evening'}]}
                         />
                     </View>
@@ -157,7 +315,7 @@ const usr_profile = () => {
                 <View style={{alignItems: "center"}}>
                     <SaveButton 
                         title="Update" 
-                        handlePress={handleEditPress}
+                        handlePress={handleUpdatePress}
                         isLoading={false}
                         buttonStyle={{width: 75, height: 40, marginTop: 10,
                     }}/>
@@ -174,10 +332,10 @@ const usr_profile = () => {
                 <Text style={{paddingRight: 10}}>{form.year}</Text>
                 <Text style={{marginTop: 10, marginBottom: 10, fontWeight: 700}}>Study Preference: </Text>
                 {/* Placeholder text, does not use selected dropdown value yet */}
-                <Text style={{paddingRight: 10}}>Your study preference</Text>
+                <Text style={{paddingRight: 10}}>{form.studyPref}</Text>
                 <Text style={{marginTop: 10, marginBottom: 10, fontWeight: 700}}>Availability: </Text>
                 {/* Placeholder text, does not use selected dropdown value yet */}
-                <Text style={{paddingRight: 10}}>Your availability day/time of day</Text>
+                <Text style={{paddingRight: 10}}>{form.studyDay} {form.studyTime}</Text>
             </View>
         </View>
     </ScrollView>
