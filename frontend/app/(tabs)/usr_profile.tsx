@@ -7,6 +7,7 @@ import FormEditProfile from '@/components/profile/forEditProfile/FormEditProfile
 import { validateName, validatePhone, validateUniversity, validateMajor, validateYear } from '@/components/profile/InputValidation/Input_Validation'
 import Toast from 'react-native-toast-message';
 import Errors from '@/components/error_message/form_error';
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const usr_profile = () => {
     {/* Initialize profile form variables */}
@@ -114,9 +115,15 @@ const usr_profile = () => {
     }
 
   return (
-    <ScrollView style={{backgroundColor: 'white'}}>
-        <View style={{backgroundColor: 'lightblue', borderStyle: 'solid', borderWidth: 5, borderColor: 'black', paddingLeft: 10, paddingTop: 20, paddingBottom: 20}}>
-
+      <SafeAreaView
+            className='bg-orange-50 h-full'
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              padding: 10
+            }}>
+    <ScrollView>
             {/* Edit button to show/hide forms/dropdowns/text fields */}
             <View style={{alignItems: "flex-end"}}>
                 <EditButton
@@ -164,9 +171,9 @@ const usr_profile = () => {
 
                 {/* Name and phone number (visible by default, uses info from form variables) */}
                 <View style={{display: visible ? 'none' : 'flex'}}>
-                    <Text style={{fontSize: 25, marginLeft: 10, marginBottom: 10, fontWeight: 700}}>Name: </Text>
+                    <Text style={{color: '#FF7900', fontSize: 25, marginLeft: 10, marginBottom: 10, fontWeight: 700}}>Name: </Text>
                     <Text style = {{fontSize: 25, marginLeft: 10}}>{form.name}</Text>
-                    <Text style={{fontSize: 25, marginLeft: 10, marginTop: 10, marginBottom: 10, fontWeight: 700}}>Phone: </Text>
+                    <Text style={{color: '#FF7900', fontSize: 25, marginLeft: 10, marginTop: 10, marginBottom: 10, fontWeight: 700}}>Phone: </Text>
                     <Text style = {{fontSize: 25, marginLeft: 10}}>({form.phone[0]}{form.phone[1]}{form.phone[2]}) {form.phone[3]}{form.phone[4]}{form.phone[5]}-{form.phone[6]}{form.phone[7]}{form.phone[8]}{form.phone[9]}</Text>
                 </View>
             </View>
@@ -174,9 +181,9 @@ const usr_profile = () => {
             {/* Edit rest of profile info forms/dropdown menus (not visible until edit button is clicked) */}
             <View style={{display: visible ? 'flex' : 'none'}}>
                 {/* University dropdown title */}
-                <Text style={{fontWeight: 700, marginTop: 10, marginBottom: 10}}>University:</Text>
+                <Text style={{color: '#FF7900', fontWeight: 700, marginTop: 10, marginBottom: 10}}>University:</Text>
                 {/* University dropdown menu */}
-                <View style={{width: 250, backgroundColor: 'lightgrey', borderColor: 'black', borderStyle: 'solid', borderWidth: 2}}>
+                <View className="border-2 border-black w-full h-14 px-0 bg-amber-50 rounded-2xl" style={{width: 250}}>
                 <RNPickerSelect
                     style={{placeholder: {color: 'black'}}}
                     placeholder={{
@@ -189,9 +196,9 @@ const usr_profile = () => {
                 </View>
 
                 {/* Study Major dropdown title */}
-                <Text style={{fontWeight: 700, marginTop: 10, marginBottom: 10}}>Study Major:</Text>
+                <Text style={{color: '#FF7900', fontWeight: 700, marginTop: 10, marginBottom: 10}}>Study Major:</Text>
                 {/* Study Major dropdown menu */}
-                <View style={{width: 250, backgroundColor: 'lightgrey', borderColor: 'black', borderStyle: 'solid', borderWidth: 2}}>
+                <View className="border-2 border-black w-full h-14 px-0 bg-amber-50 rounded-2xl" style={{width: 250}}>
                 <RNPickerSelect
                     style={{placeholder: {color: 'black'}}}
                     placeholder={{
@@ -204,9 +211,9 @@ const usr_profile = () => {
                 </View>
 
                 {/* Study Year dropdown title */}
-                <Text style={{fontWeight: 700, marginTop: 10, marginBottom: 10}}>Year of Study:</Text>
+                <Text style={{color: '#FF7900', fontWeight: 700, marginTop: 10, marginBottom: 10}}>Year of Study:</Text>
                 {/* Study Year dropdown menu */}
-                <View style={{width: 250, backgroundColor: 'lightgrey', borderColor: 'black', borderStyle: 'solid', borderWidth: 2}}>
+                <View className="border-2 border-black w-full h-14 px-0 bg-amber-50 rounded-2xl" style={{width: 250}}>
                 <RNPickerSelect
                     style={{placeholder: {color: 'black'}}}
                     placeholder={{
@@ -219,9 +226,9 @@ const usr_profile = () => {
                 </View>
 
                 {/* Study Preference dropdown title */}
-                <Text style={{fontWeight: 700, marginTop: 10, marginBottom: 10}}>Study Preference:</Text>
+                <Text style={{color: '#FF7900', fontWeight: 700, marginTop: 10, marginBottom: 10}}>Study Preference:</Text>
                 {/* Study Preference dropdown menu */}
-                <View style={{width: 250, backgroundColor: 'lightgrey', borderColor: 'black', borderStyle: 'solid', borderWidth: 2}}>
+                <View className="border-2 border-black w-full h-14 px-0 bg-amber-50 rounded-2xl" style={{width: 250}}>
                 <RNPickerSelect
                     style={{placeholder: {color: 'black'}}}
                     placeholder={{
@@ -234,10 +241,10 @@ const usr_profile = () => {
                 </View>
 
                 {/* Availability dropdown title */}
-                <Text style={{fontWeight: 700, marginTop: 10, marginBottom: 10}}>Availability:</Text>
+                <Text style={{color: '#FF7900', fontWeight: 700, marginTop: 10, marginBottom: 10}}>Availability:</Text>
                 <View style={{flexDirection: 'row'}}>
                     {/* Availability day dropdown menu */}
-                    <View style={{width: 175, backgroundColor: 'lightgrey', borderColor: 'black', borderStyle: 'solid', borderWidth: 2}}>
+                    <View className="border-2 border-black w-full h-14 px-0 bg-amber-50 rounded-2xl" style={{width: 175}}>
                         <RNPickerSelect
                             style={{placeholder: {color: 'black'}}}
                             placeholder={{
@@ -250,7 +257,7 @@ const usr_profile = () => {
                     </View>
 
                     {/* Availability time dropdown menu */}
-                    <View style={{width: 175, marginLeft: 10, backgroundColor: 'lightgrey', borderColor: 'black', borderStyle: 'solid', borderWidth: 2}}>
+                    <View className="border-2 border-black w-full h-14 px-0 bg-amber-50 rounded-2xl" style={{width: 175}}>
                         <RNPickerSelect
                             style={{placeholder: {color: 'black'}}}
                             placeholder={{
@@ -285,21 +292,21 @@ const usr_profile = () => {
 
             {/* Display rest of profile information (visible by default, displays form variable values) */}
             <View style={{display: visible ? 'none' : 'flex'}}>
-                <Text style={{marginTop: 10, marginBottom: 10, fontWeight: 700}}>University Name: </Text>
+                <Text style={{color: '#FF7900', marginTop: 10, marginBottom: 10, fontWeight: 700}}>University Name: </Text>
                 <Text style={{paddingRight: 10}}>{form.university}</Text>
-                <Text style={{marginTop: 10, marginBottom: 10, fontWeight: 700}}>Major: </Text>
+                <Text style={{color: '#FF7900', marginTop: 10, marginBottom: 10, fontWeight: 700}}>Major: </Text>
                 <Text style={{paddingRight: 10}}>{form.major}</Text>
-                <Text style={{marginTop: 10, marginBottom: 10, fontWeight: 700}}>Year: </Text>
+                <Text style={{color: '#FF7900', marginTop: 10, marginBottom: 10, fontWeight: 700}}>Year: </Text>
                 <Text style={{paddingRight: 10}}>{form.year}</Text>
-                <Text style={{marginTop: 10, marginBottom: 10, fontWeight: 700}}>Study Preference: </Text>
+                <Text style={{color: '#FF7900', marginTop: 10, marginBottom: 10, fontWeight: 700}}>Study Preference: </Text>
                 {/* Placeholder text, does not use selected dropdown value yet */}
                 <Text style={{paddingRight: 10}}>{form.studyPref}</Text>
-                <Text style={{marginTop: 10, marginBottom: 10, fontWeight: 700}}>Availability: </Text>
+                <Text style={{color: '#FF7900', marginTop: 10, marginBottom: 10, fontWeight: 700}}>Availability: </Text>
                 {/* Placeholder text, does not use selected dropdown value yet */}
                 <Text style={{paddingRight: 10}}>{form.studyDay} {form.studyTime}</Text>
             </View>
-        </View>
     </ScrollView>
+    </SafeAreaView>
   )
 }
 
