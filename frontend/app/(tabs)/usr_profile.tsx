@@ -24,9 +24,6 @@ const usr_profile = () => {
             touched: {
                 name: false,
                 phone: false,
-                university: false,
-                major: false,
-                year: false,
             },
         })
 
@@ -57,42 +54,6 @@ const usr_profile = () => {
         }));
     };
 
-    // Handler for university field
-    const handleUniversityChange = (usrUniversity: string) => {
-        setForm((prev) => ({
-            ...prev,
-            university: usrUniversity,
-            touched: {
-                ...prev.touched,
-                university: true,
-            },
-        }));
-    };
-
-    // Handler for major field
-    const handleMajorChange = (usrMajor: string) => {
-        setForm((prev) => ({
-            ...prev,
-            major: usrMajor,
-            touched: {
-                ...prev.touched,
-                major: true,
-            },
-        }));
-    };
-
-    // Handler for year field
-    const handleYearChange = (usrYear: string) => {
-        setForm((prev) => ({
-            ...prev,
-            year: usrYear,
-            touched: {
-                ...prev.touched,
-                year: true,
-            },
-        }));
-    };
-
     useEffect(()=>{
         validateForm();
     }, [form.name, form.phone, form.university, form.major, form.year, form.touched.name, form.touched.phone, form.touched.university, form.touched.major, form.touched.year]);
@@ -110,41 +71,14 @@ const usr_profile = () => {
             }
         }
 
-            //Validate phone
-            if(form.touched.phone){
-                if(form.phone.length === 0){
-                    errors.phone = "Phone number is required"
-                } else if(!validatePhone(form.phone) ){
-                    errors.phone = "Phone number is invalid"
-                }
+        //Validate phone
+        if(form.touched.phone){
+            if(form.phone.length === 0){
+                errors.phone = "Phone number is required"
+            } else if(!validatePhone(form.phone) ){
+                errors.phone = "Phone number is invalid"
             }
-
-            //Validate university
-            if(form.touched.university){
-                if(form.phone.length === 0){
-                    errors.university = "University is required"
-                } else if(!validateUniversity(form.university) ){
-                    errors.university = "University is invalid"
-                }
-            }
-
-            //Validate major
-            if(form.touched.major){
-                if(form.major.length === 0){
-                    errors.major = "Major is required"
-                } else if(!validateMajor(form.major) ){
-                    errors.major = "Major is invalid"
-                }
-            }
-
-            //Validate year
-            if(form.touched.year){
-                if(form.year.length === 0){
-                    errors.year = "Year is required"
-                } else if(!validateYear(form.year) ){
-                    errors.year = "Year is invalid"
-                }
-            }
+        }
 
         //Initialize error
         setForm((prev)=>({
@@ -239,32 +173,50 @@ const usr_profile = () => {
 
             {/* Edit rest of profile info forms/dropdown menus (not visible until edit button is clicked) */}
             <View style={{display: visible ? 'flex' : 'none'}}>
-                {/* University form title + form field */}
-                <FormEditProfile
-                    title="University Name:"
-                    value={form.university}
-                    handleChangeText={handleUniversityChange}
-                    otherStyles={{marginTop: 10}}
-                    keyboardType="default"
+                {/* University dropdown title */}
+                <Text style={{fontWeight: 700, marginTop: 10, marginBottom: 10}}>University:</Text>
+                {/* University dropdown menu */}
+                <View style={{width: 250, backgroundColor: 'lightgrey', borderColor: 'black', borderStyle: 'solid', borderWidth: 2}}>
+                <RNPickerSelect
+                    style={{placeholder: {color: 'black'}}}
+                    placeholder={{
+                        label: 'Select a university...',
+                        value: null
+                    }}
+                    onValueChange={(value) => form.university = value}
+                    items={[{label: 'Dalhousie', value: 'Dalhousie'}, {label: 'St. Marys', value: 'St. Marys'}, {label: 'CBU', value: 'CBU'}, {label: 'UofT', value: 'UofT'}, {label: 'NSCC', value: 'NSCC'}]}
                 />
+                </View>
 
-                {/* Major form title + form field */}
-                <FormEditProfile
-                    title="Major:"
-                    value={form.major}
-                    handleChangeText={handleMajorChange}
-                    otherStyles={{marginTop: 10}}
-                    keyboardType="default"
+                {/* Study Major dropdown title */}
+                <Text style={{fontWeight: 700, marginTop: 10, marginBottom: 10}}>Study Major:</Text>
+                {/* Study Major dropdown menu */}
+                <View style={{width: 250, backgroundColor: 'lightgrey', borderColor: 'black', borderStyle: 'solid', borderWidth: 2}}>
+                <RNPickerSelect
+                    style={{placeholder: {color: 'black'}}}
+                    placeholder={{
+                        label: 'Select a major...',
+                        value: null
+                    }}
+                    onValueChange={(value) => form.major = value}
+                    items={[{label: 'Biology', value: 'Biology'}, {label: 'Chemistry', value: 'Chemistry'}, {label: 'Comp. Sci.', value: 'Comp. Sci.'}, {label: 'Math', value: 'Math'}, {label: 'Physics', value: 'Physics'}]}
                 />
+                </View>
 
-                {/* Year form title + form field */}
-                <FormEditProfile
-                    title="Year:"
-                    value={form.year}
-                    handleChangeText={handleYearChange}
-                    otherStyles={{marginTop: 10}}
-                    keyboardType="default"
+                {/* Study Year dropdown title */}
+                <Text style={{fontWeight: 700, marginTop: 10, marginBottom: 10}}>Year of Study:</Text>
+                {/* Study Year dropdown menu */}
+                <View style={{width: 250, backgroundColor: 'lightgrey', borderColor: 'black', borderStyle: 'solid', borderWidth: 2}}>
+                <RNPickerSelect
+                    style={{placeholder: {color: 'black'}}}
+                    placeholder={{
+                        label: 'Select a year...',
+                        value: null
+                    }}
+                    onValueChange={(value) => form.year = value}
+                    items={[{label: '1', value: '1'}, {label: '2', value: '2'}, {label: '3', value: '3'}, {label: '4', value: '4'}]}
                 />
+                </View>
 
                 {/* Study Preference dropdown title */}
                 <Text style={{fontWeight: 700, marginTop: 10, marginBottom: 10}}>Study Preference:</Text>
