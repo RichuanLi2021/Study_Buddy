@@ -311,6 +311,15 @@ const usr_profile = () => {
                     </View>
                 </View>
 
+                <View style={{alignItems: "center"}}>
+                    {/* Display error message */}
+                    {(form.touched.name || form.touched.phone || form.touched.university || form.touched.major || form.touched.year) && Object.values(form.error).length > 0 && (
+                        <Text style={{color: 'red', marginTop: 10 }}>
+                            {Object.values(form.error).join("\n")}
+                        </Text>
+                    )}
+                </View>
+
                 {/* Update button to save edited form/dropdown menu information (does nothing right now) */}
                 <View style={{alignItems: "center"}}>
                     <SaveButton 
