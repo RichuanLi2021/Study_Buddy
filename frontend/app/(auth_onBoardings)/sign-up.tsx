@@ -7,6 +7,9 @@ import { validateEmail, validatePassword } from '@/components/auth/InputValidati
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '@/config/firebaseConfig'
 import RNPickerSelect from 'react-native-picker-select';
+import Toast from 'react-native-toast-message';
+import { Link, router } from 'expo-router';
+import AlertAsync from "react-native-alert-async";
 
 const Signup = () => {
 
@@ -43,14 +46,28 @@ const Signup = () => {
       await createUserWithEmailAndPassword(auth, value.email, value.password)
       .then((userCredential)=> {
         const user = userCredential.user;
-        console.log("Hello! :" + user)
+        console.log("Hello! :" + user);
         Alert.alert("You are registered successfully")
+
+        Toast.show({
+            type: 'success',
+            text1: 'Try adding a profile picture on your profile page!',
+            text2: 'A profile picture may help you match with more study partners.',
+            position: 'bottom',
+            bottomOffset: 100
+        });
+
+        // Pause the navigation to the next page to allow the toast to show
+        setTimeout(() => {
+            router.push('/(tabs)/usr_home');
+        }, 2000);
       
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
         setValue({...value, error: errorMessage})
+        console.log(value.error);
         Alert.alert("Sorry, something went wrong with your signup: " + value.error);
       });
 

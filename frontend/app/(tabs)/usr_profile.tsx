@@ -310,11 +310,11 @@ const usr_profile = () => {
                 <Text style={{color: '#FF7900', marginTop: 10, marginBottom: 10, fontWeight: 700}}>Availability: </Text>
                 {/* Placeholder text, does not use selected dropdown value yet */}
                 <Text style={{paddingRight: 10}}>{form.studyDay} {form.studyTime}</Text>
-                <View style={{alignItems: 'center'}}>
+                <View style={{alignItems: 'center', paddingTop: 20}}>
                 <LogoutButton
                     title="Log Out"
                     handlePress={handleLogoutPress}
-                    buttonStyle={{width: 100, height: 50, marginRight: 20}}
+                    buttonStyle={{width: 100, height: 50}}
                     isLoading={false}
                 />
                 </View>
