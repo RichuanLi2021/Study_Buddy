@@ -1,13 +1,12 @@
-import { View, Text, ScrollView, Alert } from 'react-native';
-import React, { useState } from 'react';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import FormSignup from '@/components/auth/forSignup/FormSignup';
-import CustomButton from '@/components/auth/button/buttons';
-import { validateEmail, validatePassword } from '@/components/auth/InputValidation/Input_validation';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '@/config/firebaseConfig';
-import { useRouter } from 'expo-router'; // Import useRouter for navigation
-import { Link, router } from 'expo-router';
+import { View, Text, ScrollView, Alert} from 'react-native'
+import React, { useState } from 'react'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import FormSignup from '@/components/auth/forSignup/FormSignup'
+import CustomButton from '@/components/auth/button/buttons'
+import { validateEmail, validatePassword } from '@/components/auth/InputValidation/Input_validation'
+import { createUserWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '@/config/firebaseConfig'
+import RNPickerSelect from 'react-native-picker-select';
 
 const Signup = () => {
   const router = useRouter(); // Initialize the router
@@ -103,83 +102,89 @@ const Signup = () => {
             keyboardType="default"
           />
 
-          {/* Enter university */}
-          <FormSignup
-            title="University"
-            value={value.university}
-            handleChangeText={(usrUniversity) => {
-              setValue({
-                ...value,
-                university: usrUniversity,
-              });
-            }}
-            keyboardType="default"
-          />
-
-          {/* Enter major */}
-          <FormSignup
-            title="Major"
-            value={value.major}
-            handleChangeText={(usrMajor) => {
-              setValue({
-                ...value,
-                major: usrMajor,
-              });
-            }}
-            keyboardType="default"
-          />
-
-          {/* Enter year */}
-          <FormSignup
-            title="Year of Study"
-            value={value.year}
-            handleChangeText={(usrYearOfStudy) => {
-              setValue({
-                ...value,
-                year: usrYearOfStudy,
-              });
-            }}
-            keyboardType="numeric"
-          />
-
-          {/* Enter study preference */}
-          <FormSignup
-            title="Study Preference"
-            value={value.studyPreference}
-            handleChangeText={(usrPreference) => {
-              setValue({
-                ...value,
-                studyPreference: usrPreference,
-              });
-            }}
-            keyboardType="default"
-          />
-
           {/* Enter email */}
-          <FormSignup
-            title="Email"
-            value={value.email}
-            handleChangeText={(usrEmail) => {
-              setValue({
-                ...value,
-                email: usrEmail,
-              });
-            }}
-            keyboardType="email-address"
-          />
+                    <FormSignup
+                      title='Email'
+                      value={value.email}
+                      handleChangeText={(usrEmail) => {
+                        setValue({
+                          ...value, email: usrEmail
+                        })
+                      }}
+                      keyboardType='email-address'
+                    />
 
-          {/* Enter password */}
-          <FormSignup
-            title="Password"
-            value={value.password}
-            handleChangeText={(usrPassword) => {
-              setValue({
-                ...value,
-                password: usrPassword,
-              });
-            }}
-            keyboardType="default"
-          />
+                    {/* Enter password */}
+                    <FormSignup
+                      title='Password'
+                      value={value.password}
+                      handleChangeText={(usrPassword) => {
+                        setValue({
+                          ...value, password: usrPassword
+                        })
+                      }}
+                      keyboardType='default'
+                    />
+
+          {/* University dropdown title */}
+          <Text style={{fontWeight: 700, marginTop: 10, marginBottom: 10}}>University:</Text>
+          {/* University dropdown menu */}
+          <View className="border-2 border-black w-full h-14 px-0 bg-amber-50 rounded-2xl">
+                <RNPickerSelect
+                    style={{placeholder: {color: 'black'}}}
+                    placeholder={{
+                        label: 'Select a university...',
+                        value: ''
+                    }}
+                    onValueChange={(value) => value.university = value}
+                    items={[{label: 'Dalhousie', value: 'Dalhousie'}, {label: 'St. Marys', value: 'St. Marys'}, {label: 'CBU', value: 'CBU'}, {label: 'UofT', value: 'UofT'}, {label: 'NSCC', value: 'NSCC'}]}
+                />
+          </View>
+
+          {/* Study Major dropdown title */}
+          <Text style={{fontWeight: 700, marginTop: 10, marginBottom: 10}}>Study Major:</Text>
+          {/* Study Major dropdown menu */}
+          <View className="border-2 border-black w-full h-14 px-0 bg-amber-50 rounded-2xl">
+                <RNPickerSelect
+                    style={{placeholder: {color: 'black'}}}
+                    placeholder={{
+                        label: 'Select a major...',
+                        value: ''
+                    }}
+                    onValueChange={(value) => value.major = value}
+                    items={[{label: 'Biology', value: 'Biology'}, {label: 'Chemistry', value: 'Chemistry'}, {label: 'Comp. Sci.', value: 'Comp. Sci.'}, {label: 'Math', value: 'Math'}, {label: 'Physics', value: 'Physics'}]}
+                />
+          </View>
+
+          {/* Study Year dropdown title */}
+          <Text style={{fontWeight: 700, marginTop: 10, marginBottom: 10}}>Year of Study:</Text>
+          {/* Study Year dropdown menu */}
+          <View className="border-2 border-black w-full h-14 px-0 bg-amber-50 rounded-2xl">
+                <RNPickerSelect
+                    style={{placeholder: {color: 'black'}}}
+                    placeholder={{
+                        label: 'Select a year...',
+                        value: ''
+                    }}
+                    onValueChange={(value) => value.year = value}
+                    items={[{label: '1', value: '1'}, {label: '2', value: '2'}, {label: '3', value: '3'}, {label: '4', value: '4'}]}
+                />
+          </View>
+
+          {/* Study Preference dropdown title */}
+          <Text style={{fontWeight: 700, marginTop: 10, marginBottom: 10}}>Study Preference:</Text>
+          {/* Study Preference dropdown menu */}
+          <View className="border-2 border-black w-full h-14 px-0 bg-amber-50 rounded-2xl">
+                <RNPickerSelect
+                    style={{placeholder: {color: 'black'}}}
+                    placeholder={{
+                        label: 'Select a preference...',
+                        value: ''
+                    }}
+                    onValueChange={(value) => value.studyPreference = value}
+                    items={[{label: 'Quiet', value: 'Quiet'}, {label: 'Collaborative', value: 'Collaborative'}]}
+                />
+          </View>
 
           {/* Verify email Button */}
           <CustomButton

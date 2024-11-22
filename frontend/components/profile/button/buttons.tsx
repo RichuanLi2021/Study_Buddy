@@ -26,7 +26,7 @@ export const EditButton = ({
     return (
         <TouchableOpacity
             style={[{
-                backgroundColor: 'white',
+                backgroundColor: 'lightyellow',
                 borderRadius: 12,
                 borderColor: 'black',
                 borderWidth: 1,
@@ -61,7 +61,7 @@ export const SaveButton = ({
     return (
         <TouchableOpacity
             style={[{
-                backgroundColor: 'lightyellow',
+                backgroundColor: '#FF7900',
                 borderRadius: 12,
                 borderColor: 'black',
                 borderWidth: 1,
@@ -76,7 +76,7 @@ export const SaveButton = ({
             {...props}
         >
             <Text style={{
-                color: 'black',
+                color: 'white',
                 fontWeight: 'bold',
                 fontSize: 18,
             }}>
