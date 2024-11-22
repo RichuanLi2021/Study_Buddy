@@ -46,7 +46,7 @@ const Signup = () => {
           const user = userCredential.user;
           console.log('Hello! : ' + user);
           Alert.alert('You are registered successfully');
-          router.push('/usr_home'); // Redirect to usr_home
+          router.push('/sign-in'); // Redirect to usr_home
         })
         .catch((error) => {
           const errorCode = error.code;
