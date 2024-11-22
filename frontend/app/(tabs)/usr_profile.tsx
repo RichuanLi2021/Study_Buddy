@@ -2,12 +2,13 @@ import { View, Text, Image } from 'react-native'
 import { ScrollView } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
 import React, { useEffect, useState } from 'react'
-import {EditButton, SaveButton} from '@/components/profile/button/buttons'
+import {EditButton, SaveButton, LogoutButton} from '@/components/profile/button/buttons'
 import FormEditProfile from '@/components/profile/forEditProfile/FormEditProfile'
 import { validateName, validatePhone, validateUniversity, validateMajor, validateYear } from '@/components/profile/InputValidation/Input_Validation'
 import Toast from 'react-native-toast-message';
 import Errors from '@/components/error_message/form_error';
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { Link, router } from 'expo-router';
 
 const usr_profile = () => {
     {/* Initialize profile form variables */}
@@ -100,6 +101,11 @@ const usr_profile = () => {
         setVisible(!visible);
         return;
     }
+
+    const handleLogoutPress = async () => {
+            router.push('/');
+            return;
+        }
 
     const handleUpdatePress = async () => {
         if(!form.isFormValid){
@@ -304,6 +310,14 @@ const usr_profile = () => {
                 <Text style={{color: '#FF7900', marginTop: 10, marginBottom: 10, fontWeight: 700}}>Availability: </Text>
                 {/* Placeholder text, does not use selected dropdown value yet */}
                 <Text style={{paddingRight: 10}}>{form.studyDay} {form.studyTime}</Text>
+                <View style={{alignItems: 'center'}}>
+                <LogoutButton
+                    title="Log Out"
+                    handlePress={handleLogoutPress}
+                    buttonStyle={{width: 100, height: 50, marginRight: 20}}
+                    isLoading={false}
+                />
+                </View>
             </View>
     </ScrollView>
     </SafeAreaView>

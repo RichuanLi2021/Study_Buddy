@@ -16,6 +16,13 @@ interface SaveButtonProps extends TouchableOpacityProps {
     isLoading: boolean;
 }
 
+interface LogoutButtonProps extends TouchableOpacityProps {
+    title: string;
+    handlePress: () => void;
+    buttonStyle?: StyleProp<ViewStyle>;
+    isLoading: boolean;
+}
+
 export const EditButton = ({
     title,
     handlePress,
@@ -77,6 +84,41 @@ export const SaveButton = ({
         >
             <Text style={{
                 color: 'white',
+                fontWeight: 'bold',
+                fontSize: 18,
+            }}>
+                {title}
+            </Text>
+        </TouchableOpacity>
+    );
+}
+
+export const LogoutButton = ({
+    title,
+    handlePress,
+    buttonStyle,
+    isLoading,
+    ...props
+}: LogoutButtonProps) => {
+    return (
+        <TouchableOpacity
+            style={[{
+                backgroundColor: 'red',
+                borderRadius: 12,
+                borderColor: 'black',
+                borderWidth: 1,
+                minHeight: 18,
+                justifyContent: 'center',
+                alignItems: 'center',
+            },
+                buttonStyle,
+            ]}
+            onPress={handlePress}
+            activeOpacity={0.7}
+            {...props}
+        >
+            <Text style={{
+                color: 'black',
                 fontWeight: 'bold',
                 fontSize: 18,
             }}>
