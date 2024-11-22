@@ -1,10 +1,14 @@
 import { View, Text, Image } from 'react-native'
 import { ScrollView } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {EditButton, SaveButton} from '@/components/profile/button/buttons'
 import FormEditProfile from '@/components/profile/forEditProfile/FormEditProfile'
 import * as ImagePicker from 'expo-image-picker';
+import { validateName, validatePhone, validateUniversity, validateMajor, validateYear } from '@/components/profile/InputValidation/Input_Validation'
+import Toast from 'react-native-toast-message';
+import Errors from '@/components/error_message/form_error';
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 const usr_profile = () => {
     const [profilePicture, setProfilePicture] = useState(null);
@@ -24,11 +28,83 @@ const usr_profile = () => {
             university: "Your University",
             major: "Your Major",
             year: "Your Year",
-        },
-    )
+            studyPref: "",
+            studyTime: "",
+            studyDay: "",
+            error: {},
+            isFormValid: false,
+            touched: {
+                name: false,
+                phone: false,
+            },
+        })
 
     {/* Initialize visible to false state */}
     const [visible, setVisible] = useState(false);
+
+    // Handler for name field
+    const handleNameChange = (usrName: string) => {
+        setForm((prev) => ({
+            ...prev,
+            name: usrName,
+            touched: {
+                ...prev.touched,
+                name: true,
+            },
+        }));
+    };
+
+    // Handler for phone field
+    const handlePhoneChange = (usrPhone: string) => {
+        setForm((prev) => ({
+            ...prev,
+            phone: usrPhone,
+            touched: {
+                ...prev.touched,
+                phone: true,
+            },
+        }));
+    };
+
+    useEffect(()=>{
+        validateForm();
+    }, [form.name, form.phone, form.university, form.major, form.year, form.touched.name, form.touched.phone, form.touched.university, form.touched.major, form.touched.year]);
+
+    //Form validation
+    const validateForm = () => {
+        let errors: Errors = {};
+
+        //Validate name
+        if(form.touched.name){
+            if(form.name.length === 0){
+                errors.name = "Name is required"
+            } else if(!validateName(form.name) ){
+                errors.name = "Name is invalid"
+            }
+        }
+
+        //Validate phone
+        if(form.touched.phone){
+            if(form.phone.length === 0){
+                errors.phone = "Phone number is required"
+            } else if(!validatePhone(form.phone) ){
+                errors.phone = "Phone number is invalid"
+            }
+        }
+
+        //Initialize error
+        setForm((prev)=>({
+            ...prev,
+            error: errors
+        }))
+
+        let errorList = Object.keys(errors);
+        //update form state
+        setForm((prev)=>({
+            ...prev,
+            isFormValid: errorList.length === 0
+        }))
+    }
 
     {/* Switch visible state when edit button clicked */}
     const handleEditPress = async () => {
@@ -36,10 +112,29 @@ const usr_profile = () => {
         return;
     }
 
-  return (
-    <ScrollView style={{backgroundColor: 'white'}}>
-        <View style={{backgroundColor: 'lightblue', borderStyle: 'solid', borderWidth: 5, borderColor: 'black', paddingLeft: 10, paddingTop: 20, paddingBottom: 20}}>
+    const handleUpdatePress = async () => {
+        if(!form.isFormValid){
+            Toast.show({
+                type: 'error',
+                text1: 'Invalid Form',
+                text2: 'Check your form values to make sure they are correct'
+            })
+        } else {
+            setVisible(!visible);
+        }
+        return;
+    }
 
+  return (
+      <SafeAreaView
+            className='bg-orange-50 h-full'
+            style={{
+              flex: 1,
+              justifyContent: "center",
+              alignItems: "center",
+              padding: 10
+            }}>
+    <ScrollView>
             {/* Edit button to show/hide forms/dropdowns/text fields */}
             <View style={{alignItems: "flex-end"}}>
                 <EditButton
@@ -74,7 +169,7 @@ const usr_profile = () => {
                     <FormEditProfile
                         title="Name:"
                         value={form.name}
-                        handleChangeText={(usrName) => setForm({...form, name: usrName})}
+                        handleChangeText={handleNameChange}
                         otherStyles={{marginTop: 10, marginLeft: 10}}
                         keyboardType="default"
                     />
@@ -83,7 +178,7 @@ const usr_profile = () => {
                     <FormEditProfile
                         title="Phone:"
                         value={form.phone}
-                        handleChangeText={(usrPhone) => setForm({...form, phone: usrPhone})}
+                        handleChangeText={handlePhoneChange}
                         otherStyles={{marginTop: 10, marginLeft: 10}}
                         keyboardType="phone-pad"
                     />
@@ -106,92 +201,119 @@ const usr_profile = () => {
 
                 {/* Name and phone number (visible by default, uses info from form variables) */}
                 <View style={{display: visible ? 'none' : 'flex'}}>
-                    <Text style={{fontSize: 25, marginLeft: 10, marginBottom: 10, fontWeight: 700}}>Name: </Text>
+                    <Text style={{color: '#FF7900', fontSize: 25, marginLeft: 10, marginBottom: 10, fontWeight: 700}}>Name: </Text>
                     <Text style = {{fontSize: 25, marginLeft: 10}}>{form.name}</Text>
-                    <Text style={{fontSize: 25, marginLeft: 10, marginTop: 10, marginBottom: 10, fontWeight: 700}}>Phone: </Text>
+                    <Text style={{color: '#FF7900', fontSize: 25, marginLeft: 10, marginTop: 10, marginBottom: 10, fontWeight: 700}}>Phone: </Text>
                     <Text style = {{fontSize: 25, marginLeft: 10}}>({form.phone[0]}{form.phone[1]}{form.phone[2]}) {form.phone[3]}{form.phone[4]}{form.phone[5]}-{form.phone[6]}{form.phone[7]}{form.phone[8]}{form.phone[9]}</Text>
                 </View>
             </View>
 
             {/* Edit rest of profile info forms/dropdown menus (not visible until edit button is clicked) */}
             <View style={{display: visible ? 'flex' : 'none'}}>
-                {/* University form title + form field */}
-                <FormEditProfile
-                    title="University Name:"
-                    value={form.university}
-                    handleChangeText={(usrUniversity) => setForm({...form, university: usrUniversity})}
-                    otherStyles={{marginTop: 10}}
-                    keyboardType="default"
+                {/* University dropdown title */}
+                <Text style={{color: '#FF7900', fontWeight: 700, marginTop: 10, marginBottom: 10}}>University:</Text>
+                {/* University dropdown menu */}
+                <View className="border-2 border-black w-full h-14 px-0 bg-amber-50 rounded-2xl" style={{width: 250}}>
+                <RNPickerSelect
+                    style={{placeholder: {color: 'black'}}}
+                    placeholder={{
+                        label: 'Select a university...',
+                        value: null
+                    }}
+                    onValueChange={(value) => form.university = value}
+                    items={[{label: 'Dalhousie', value: 'Dalhousie'}, {label: 'St. Marys', value: 'St. Marys'}, {label: 'CBU', value: 'CBU'}, {label: 'UofT', value: 'UofT'}, {label: 'NSCC', value: 'NSCC'}]}
                 />
+                </View>
 
-                {/* Major form title + form field */}
-                <FormEditProfile
-                    title="Major:"
-                    value={form.major}
-                    handleChangeText={(usrMajor) => setForm({...form, major: usrMajor})}
-                    otherStyles={{marginTop: 10}}
-                    keyboardType="default"
+                {/* Study Major dropdown title */}
+                <Text style={{color: '#FF7900', fontWeight: 700, marginTop: 10, marginBottom: 10}}>Study Major:</Text>
+                {/* Study Major dropdown menu */}
+                <View className="border-2 border-black w-full h-14 px-0 bg-amber-50 rounded-2xl" style={{width: 250}}>
+                <RNPickerSelect
+                    style={{placeholder: {color: 'black'}}}
+                    placeholder={{
+                        label: 'Select a major...',
+                        value: null
+                    }}
+                    onValueChange={(value) => form.major = value}
+                    items={[{label: 'Biology', value: 'Biology'}, {label: 'Chemistry', value: 'Chemistry'}, {label: 'Comp. Sci.', value: 'Comp. Sci.'}, {label: 'Math', value: 'Math'}, {label: 'Physics', value: 'Physics'}]}
                 />
+                </View>
 
-                {/* Year form title + form field */}
-                <FormEditProfile
-                    title="Year:"
-                    value={form.year}
-                    handleChangeText={(usrYear) => setForm({...form, year: usrYear})}
-                    otherStyles={{marginTop: 10}}
-                    keyboardType="default"
+                {/* Study Year dropdown title */}
+                <Text style={{color: '#FF7900', fontWeight: 700, marginTop: 10, marginBottom: 10}}>Year of Study:</Text>
+                {/* Study Year dropdown menu */}
+                <View className="border-2 border-black w-full h-14 px-0 bg-amber-50 rounded-2xl" style={{width: 250}}>
+                <RNPickerSelect
+                    style={{placeholder: {color: 'black'}}}
+                    placeholder={{
+                        label: 'Select a year...',
+                        value: null
+                    }}
+                    onValueChange={(value) => form.year = value}
+                    items={[{label: '1', value: '1'}, {label: '2', value: '2'}, {label: '3', value: '3'}, {label: '4', value: '4'}]}
                 />
+                </View>
 
                 {/* Study Preference dropdown title */}
-                <Text style={{fontWeight: 700, marginTop: 10, marginBottom: 10}}>Study Preference:</Text>
+                <Text style={{color: '#FF7900', fontWeight: 700, marginTop: 10, marginBottom: 10}}>Study Preference:</Text>
                 {/* Study Preference dropdown menu */}
-                <View style={{width: 250, backgroundColor: 'lightgrey', borderColor: 'black', borderStyle: 'solid', borderWidth: 2}}>
+                <View className="border-2 border-black w-full h-14 px-0 bg-amber-50 rounded-2xl" style={{width: 250}}>
                 <RNPickerSelect
                     style={{placeholder: {color: 'black'}}}
                     placeholder={{
                         label: 'Select a preference...',
                         value: null
                     }}
-                    onValueChange={(value) => console.log(value)}
-                    items={[{label: 'Quiet', value: 'quiet'}, {label: 'Collaborative', value: 'collaborative'}]}
+                    onValueChange={(value) => form.studyPref = value}
+                    items={[{label: 'Quiet', value: 'Quiet'}, {label: 'Collaborative', value: 'Collaborative'}]}
                 />
                 </View>
 
                 {/* Availability dropdown title */}
-                <Text style={{fontWeight: 700, marginTop: 10, marginBottom: 10}}>Availability:</Text>
+                <Text style={{color: '#FF7900', fontWeight: 700, marginTop: 10, marginBottom: 10}}>Availability:</Text>
                 <View style={{flexDirection: 'row'}}>
                     {/* Availability day dropdown menu */}
-                    <View style={{width: 175, backgroundColor: 'lightgrey', borderColor: 'black', borderStyle: 'solid', borderWidth: 2}}>
+                    <View className="border-2 border-black w-full h-14 px-0 bg-amber-50 rounded-2xl" style={{width: 175}}>
                         <RNPickerSelect
                             style={{placeholder: {color: 'black'}}}
                             placeholder={{
                                 label: 'Select day...',
                                 value: null
                             }}
-                            onValueChange={(value) => console.log(value)}
-                            items={[{label: 'Monday', value: 'monday'}, {label: 'Tuesday', value: 'tuesday'}, {label: 'Wednesday', value: 'wednesday'}, {label: 'Thursday', value: 'thursday'}, {label: 'Friday', value: 'friday'}, {label: 'Saturday', value: 'saturday'}, {label: 'Sunday', value: 'sunday'}]}
+                            onValueChange={(value) => form.studyDay = value}
+                            items={[{label: 'Monday', value: 'Monday'}, {label: 'Tuesday', value: 'Tuesday'}, {label: 'Wednesday', value: 'Wednesday'}, {label: 'Thursday', value: 'Thursday'}, {label: 'Friday', value: 'Friday'}, {label: 'Saturday', value: 'Saturday'}, {label: 'Sunday', value: 'Sunday'}]}
                         />
                     </View>
 
                     {/* Availability time dropdown menu */}
-                    <View style={{width: 175, marginLeft: 10, backgroundColor: 'lightgrey', borderColor: 'black', borderStyle: 'solid', borderWidth: 2}}>
+                    <View className="border-2 border-black w-full h-14 px-0 bg-amber-50 rounded-2xl" style={{width: 175}}>
                         <RNPickerSelect
                             style={{placeholder: {color: 'black'}}}
                             placeholder={{
                                 label: 'Select time...',
                                 value: null
                             }}
-                            onValueChange={(value) => console.log(value)}
+                            onValueChange={(value) => form.studyTime = value}
                             items={[{label: 'Morning', value: 'morning'}, {label: 'Afternoon', value: 'afternoon'}, {label: 'Evening', value: 'evening'}]}
                         />
                     </View>
+                </View>
+
+                <View style={{alignItems: "center"}}>
+                    {/* Display error message */}
+                    {(form.touched.name || form.touched.phone || form.touched.university || form.touched.major || form.touched.year) && Object.values(form.error).length > 0 && (
+                        <Text style={{color: 'red', marginTop: 10 }}>
+                            {Object.values(form.error).join("\n")}
+                        </Text>
+                    )}
                 </View>
 
                 {/* Update button to save edited form/dropdown menu information (does nothing right now) */}
                 <View style={{alignItems: "center"}}>
                     <SaveButton 
                         title="Update" 
-                        handlePress={handleEditPress}
+                        handlePress={handleUpdatePress}
                         isLoading={false}
                         buttonStyle={{width: 75, height: 40, marginTop: 10,
                     }}/>
@@ -200,21 +322,21 @@ const usr_profile = () => {
 
             {/* Display rest of profile information (visible by default, displays form variable values) */}
             <View style={{display: visible ? 'none' : 'flex'}}>
-                <Text style={{marginTop: 10, marginBottom: 10, fontWeight: 700}}>University Name: </Text>
+                <Text style={{color: '#FF7900', marginTop: 10, marginBottom: 10, fontWeight: 700}}>University Name: </Text>
                 <Text style={{paddingRight: 10}}>{form.university}</Text>
-                <Text style={{marginTop: 10, marginBottom: 10, fontWeight: 700}}>Major: </Text>
+                <Text style={{color: '#FF7900', marginTop: 10, marginBottom: 10, fontWeight: 700}}>Major: </Text>
                 <Text style={{paddingRight: 10}}>{form.major}</Text>
-                <Text style={{marginTop: 10, marginBottom: 10, fontWeight: 700}}>Year: </Text>
+                <Text style={{color: '#FF7900', marginTop: 10, marginBottom: 10, fontWeight: 700}}>Year: </Text>
                 <Text style={{paddingRight: 10}}>{form.year}</Text>
-                <Text style={{marginTop: 10, marginBottom: 10, fontWeight: 700}}>Study Preference: </Text>
+                <Text style={{color: '#FF7900', marginTop: 10, marginBottom: 10, fontWeight: 700}}>Study Preference: </Text>
                 {/* Placeholder text, does not use selected dropdown value yet */}
-                <Text style={{paddingRight: 10}}>Your study preference</Text>
-                <Text style={{marginTop: 10, marginBottom: 10, fontWeight: 700}}>Availability: </Text>
+                <Text style={{paddingRight: 10}}>{form.studyPref}</Text>
+                <Text style={{color: '#FF7900', marginTop: 10, marginBottom: 10, fontWeight: 700}}>Availability: </Text>
                 {/* Placeholder text, does not use selected dropdown value yet */}
-                <Text style={{paddingRight: 10}}>Your availability day/time of day</Text>
+                <Text style={{paddingRight: 10}}>{form.studyDay} {form.studyTime}</Text>
             </View>
-        </View>
     </ScrollView>
+    </SafeAreaView>
   )
 }
 

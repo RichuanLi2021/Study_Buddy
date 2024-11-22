@@ -42,22 +42,16 @@
     <string>1</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
-
     <key>NSAppTransportSecurity</key>
     <dict>
       <key>NSAllowsArbitraryLoads</key>
-      <!-- <false/> -->  
       <true/>
-      <!-- This setting allows all HTTP connections,
-          but should not be used in production for security reasons. 
-
-          Change it back to false in production environment.
-      -->
       <key>NSAllowsLocalNetworking</key>
       <true/>
     </dict>
     <key>NSUserActivityTypes</key>
     <array>
+      <string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>
       <string>$(PRODUCT_BUNDLE_IDENTIFIER).expo.index_route</string>
     </array>
     <key>UILaunchStoryboardName</key>

@@ -22,16 +22,17 @@ const FormEditProfile = ({
     }: FormEditProfile) => {
     return (
         <View className='space-y-2' style={[{ marginTop: 7 }, otherStyles]}>
-            <Text style={{color: 'black', fontWeight: 700}}>{title}</Text>
-            <View style={{backgroundColor: 'lightgrey', width: 150, height: 40}}>
+            <Text style={{color: '#FF7900', fontWeight: 700}}>{title}</Text>
+            <View className="border-2 border-black w-full h-14 px-0 bg-amber-50 rounded-2xl" style={{width: 150, height: 40}}>
                 <TextInput
                     className='text-base text-black-100 font-normal'
                     value={value}
                     onChangeText={handleChangeText}
                     style={{
-                        borderWidth: 2,
-                        borderColor: 'black',
-                        paddingBottom: 14
+                        borderWidth: 1,
+                        borderColor: '#ccc',
+                        paddingBottom: 14,
+                        borderRadius: 14
                     }}
                     keyboardType={keyboardType}
                 />
