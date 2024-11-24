@@ -1,9 +1,10 @@
 // eslint-disable-next-line import/no-unresolved
 import images from "@/assets/images/user_profile_photos/photos";
 import { ImageSourcePropType } from "react-native";
+import { SharedValue } from "react-native-reanimated";
 
 
-export type Usr_DataType = {
+export type Usr_dataType = {
     user: {
         id: number,
         name: string,
@@ -15,11 +16,13 @@ export type Usr_DataType = {
         imgPath: ImageSourcePropType
     };
     numberOfcards: number,
-    currentIndex: number
+    index: number,
+    activeIndex: SharedValue<number>;
+    onResponse:(a: boolean) => void;
 };
 
 
-export const Usr_Data = [
+export const usr_data = [
     {
         id: 1,
         name: 'Yasuo',

@@ -173,3 +173,6 @@ npm install -g react-devtools
 
 react-devtools
 ```
+
+### Library and framework used
+[Gesture_Handler](https://docs.swmansion.com/react-native-gesture-handler/docs/fundamentals/quickstart/)

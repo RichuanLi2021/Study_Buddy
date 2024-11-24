@@ -25,6 +25,9 @@ const usr_profile = () => {
             touched: {
                 name: false,
                 phone: false,
+                university: false,
+                major: false,
+                year: false  
             },
         })
 
@@ -116,7 +119,6 @@ const usr_profile = () => {
 
   return (
       <SafeAreaView
-            className='bg-orange-50 h-full'
             style={{
               flex: 1,
               justifyContent: "center",
@@ -141,7 +143,6 @@ const usr_profile = () => {
                     style={{
                         width: 170,
                         height: 170,
-                        borderStyle: 'solid',
                         borderWidth: 2,
                         borderColor: 'black'
                     }}

@@ -24,9 +24,9 @@ const Tabs_layout = () => {
       }}
       />
       <Tabs.Screen
-        name = "usr_home"
+        name = "usr_chat"
         options={{
-          title: 'Home',
+          title: 'Contact',
           tabBarIcon: () => <AntDesign name="home" size={24} color="black" />
       }}
       />
