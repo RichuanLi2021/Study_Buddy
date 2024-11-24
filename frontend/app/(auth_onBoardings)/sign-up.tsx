@@ -7,6 +7,10 @@ import { validateEmail, validatePassword } from '@/components/auth/InputValidati
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '@/config/firebaseConfig'
 import RNPickerSelect from 'react-native-picker-select';
+import Toast from 'react-native-toast-message';
+import { Link, router } from 'expo-router';
+import AlertAsync from "react-native-alert-async";
+import {useRouter} from 'expo-router';
 
 const Signup = () => {
   const router = useRouter(); // Initialize the router
