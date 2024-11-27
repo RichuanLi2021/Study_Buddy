@@ -71,21 +71,37 @@ copy the corresponding value and paste into the empty quotes in .env file.
 5. ios & android build development
 ios and android modules have already been created, so do the following:
 
-For Android development build.
+* For Android development build.
 ```
 cd frontend/
 cd android/
-echo "sdk.dir=$HOME/Library/Android/sdk" > local.properties
+
 cd ..
 npx expo run:android
 ```
 
-- if there are warnings, check if it is about: frontend/android/app/src/main/res/drawable-xhdpi/xxx_image 2.png: Resource and asset merger: ' ' is not a valid file-based resource name character: File-based resource names must contain only lowercase a-z, 0-9, or underscore.
+* Find the actual path for android sdk, for example:
+[macOs](sdk.dir=/Users/karlli/Library/Android/sdk)
+[windows](sdk.dir=C:\\Users\\tyler\\AppData\\Local\\Android\\Sdk)
+
+* Create local.properties and paste the android sdk path.
+```
+nano local.properties
+
+```
+
+* run and build android
+```
+cd ..
+npx expo run:android
+```
+
+* if there are warnings, check if it is about: frontend/android/app/src/main/res/drawable-xhdpi/xxx_image 2.png: Resource and asset merger: ' ' is not a valid file-based resource name character: File-based resource names must contain only lowercase a-z, 0-9, or underscore.
 
 if so, cd android/app/src/main/res/drawable-xhdpi/
 delete any images with ending of 2 (e.g., splashscreen_image 2.png)
 
-- if warnings persist, run
+* if warnings persist, run
 ```
 rm -rf android
 npx expo prebuild
@@ -126,12 +142,7 @@ npm install nativewind@2.0.11
 
 * npm list nativewind run this command to check if there are mutiple version installed.
 
-2. tailwindcss configuration can be found at:
-* [TextColor](https://tailwindcss.com/docs/text-color) 
-* [BackgroundColor](https://tailwindcss.com/docs/background-color)
-* [NativeWind](https://www.nativewind.dev/overview/)
-
-3. Other issues with missing module in node_modules
+2. Other issues with missing module in node_modules
 
 Check the correcponding module or dependencies, make sure they are installed.
 
@@ -175,4 +186,8 @@ react-devtools
 ```
 
 ### Library and framework used
-[Gesture_Handler](https://docs.swmansion.com/react-native-gesture-handler/docs/fundamentals/quickstart/)
+* [Gesture_Handler](https://docs.swmansion.com/react-native-gesture-handler/docs/fundamentals/quickstart/)
+* [Fontawesome](https://docs.fontawesome.com/web/use-with/react)
+* [TextColor](https://tailwindcss.com/docs/text-color) 
+* [BackgroundColor](https://tailwindcss.com/docs/background-color)
+* [NativeWind](https://www.nativewind.dev/overview/)
