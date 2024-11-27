@@ -81,8 +81,8 @@ npx expo run:android
 ```
 
 * Find the actual path for android sdk, for example:
-[macOs](sdk.dir=/Users/karlli/Library/Android/sdk)
-[windows](sdk.dir=C:\\Users\\tyler\\AppData\\Local\\Android\\Sdk)
+* [macOs](sdk.dir=/Users/karlli/Library/Android/sdk)
+* [windows](sdk.dir=C:\\Users\\tyler\\AppData\\Local\\Android\\Sdk)
 
 * Create local.properties and paste the android sdk path.
 ```
@@ -191,3 +191,19 @@ react-devtools
 * [TextColor](https://tailwindcss.com/docs/text-color) 
 * [BackgroundColor](https://tailwindcss.com/docs/background-color)
 * [NativeWind](https://www.nativewind.dev/overview/)
+
+
+### To delete remote branch
+* first check the current remote branches
+```
+git branch -r
+
+```
+
+* Delete branch
+```
+git push github --delete <branch_name>
+git push origin --delete <branch_name>
+
+e.g., git push github --delete S3_Swipe_Card
+```
