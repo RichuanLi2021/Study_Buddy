@@ -80,9 +80,9 @@ cd ..
 npx expo run:android
 ```
 
-* Find the actual path for android sdk, for example:
-* [macOs](sdk.dir=/Users/karlli/Library/Android/sdk)
-* [windows](sdk.dir=C:\\Users\\tyler\\AppData\\Local\\Android\\Sdk)
+* Find the actual path for android sdk
+1. macOs: sdk.dir=/Users/karlli/Library/Android/sdk
+2. windows: sdk.dir=C:\\Users\\tyler\\AppData\\Local\\Android\\Sdk
 
 * Create local.properties and paste the android sdk path.
 ```
