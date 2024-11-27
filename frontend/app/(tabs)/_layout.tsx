@@ -3,9 +3,14 @@ import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import React from 'react'
+import Toast from 'react-native-toast-message'
+import { User_icon } from '@/components/Tabs/tab_match/usr_icon';
+import { Message_icon } from '@/components/Tabs/tab_match/message_icon';
 
 const Tabs_layout = () => {
   return (
+
+    <>
     <Tabs 
       screenOptions={{ 
       tabBarActiveTintColor: 'blue',
@@ -20,7 +25,9 @@ const Tabs_layout = () => {
         name = "usr_match"
         options={{
           title: 'WeMit',
-          tabBarIcon: () => <FontAwesome5 name="user-friends" size={24} color="black" />
+          tabBarIcon: () => <FontAwesome5 name="user-friends" size={24} color="black" />,
+          headerLeft: () => <User_icon/>,
+          headerRight: () => <Message_icon/>
       }}
       />
       <Tabs.Screen
@@ -38,6 +45,9 @@ const Tabs_layout = () => {
         }}
       />
     </Tabs>
+
+    <Toast/>
+    </>
   )
 }
 

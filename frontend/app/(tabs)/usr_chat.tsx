@@ -9,13 +9,14 @@ import {
   Modal,
   StyleSheet,
 } from 'react-native';
-import { usr_data } from '@/constants/usrData';
+import { usr_data, UserType} from '@/constants/usrData';
 
 const usr_chat = () => {
-  const [matches, setMatches] = useState(usr_data);
 
+  //Hardcoded now
+  const [matches, setMatches] = useState<UserType[]>(usr_data);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedMatch, setSelectedMatch] = useState(null);
+  const [selectedMatch, setSelectedMatch] = useState<UserType | null>(null);
   const [modalVisible, setModalVisible] = useState(false);
 
   // Filter matches based on search query
@@ -23,7 +24,7 @@ const usr_chat = () => {
     match.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const handleMatchPress = (match) => {
+  const handleMatchPress = (match: UserType) => {
     setSelectedMatch(match);
     setModalVisible(true);
   };

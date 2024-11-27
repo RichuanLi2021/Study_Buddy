@@ -1,18 +1,17 @@
-import { Button, Image, Text, View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text, View, StyleSheet } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { heightPercentageToDP as hp } from 'react-native-responsive-screen';
-import images from '@/assets/images/user_profile_photos/photos';
-import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { usr_data } from '@/constants/usrData';
 import { runOnJS, useAnimatedReaction, useSharedValue} from 'react-native-reanimated';
 import {GestureHandlerRootView} from "react-native-gesture-handler";
 import Usr_Cards from '@/components/swip_Cards/cards';
-import { router } from 'expo-router';
+import Toast from 'react-native-toast-message';
 
 const usr_match = () => {
   //of which card we are currently looking at.
   const activeIndex = useSharedValue(0);
+
   const [index, setIndex] = useState(0);
   const [users, setUsers] = useState(usr_data);
 
@@ -24,13 +23,14 @@ const usr_match = () => {
   }
 )
 
-  const onPress = () => {
-    router.push('/(tabs)/usr_profile');
-  }
-
   useEffect(() => {
     if(index > users.length - 3){
-      console.warn('last two cards remaining!')
+      Toast.show({
+        type: 'info',
+        text1: 'Last two cards remaining!',
+        position: 'bottom',
+        bottomOffset: 80
+      })
       setUsers((usrs) => [...usrs, ...usr_data.reverse()]);
     }
   }, [index]);
@@ -42,31 +42,6 @@ const usr_match = () => {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaView style={styles.container} edges={['left', 'right']}>
-        {/* Header view */}
-        <View style={styles.headerView}>
-
-          {/* Image */}
-          <View style={styles.imageContainer}>
-            <TouchableOpacity onPress={onPress}>
-              <Image
-                source={images.elon_musk}
-                style={styles.image}
-              />
-            </TouchableOpacity>
-          </View>
-
-          {/* Notification icon */}
-          <View>
-            <TouchableOpacity style={styles.notificationContainer}>
-              <MaterialCommunityIcons 
-                name="bell-check-outline" 
-                size={50} 
-                color="black"
-              />
-            </TouchableOpacity>
-          </View>
-        </View>
-
 
           {/* cards display */}
           <Text 
@@ -84,13 +59,6 @@ const usr_match = () => {
                 onResponse={onResponse}
               />
             ))}
-
-            {/* <View style={{position='absolute', bottom: '20', backgroundColor: 'red'}}>
-              <Button 
-                title="Hi" 
-                onPress={() => (activeIndex.value = activeIndex.value + 1)}
-              />
-            </View> */}
           </View>
       </SafeAreaView>
     </GestureHandlerRootView>
@@ -131,6 +99,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    top: 50
   }
 
 });

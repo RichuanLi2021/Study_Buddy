@@ -3,26 +3,28 @@ import images from "@/assets/images/user_profile_photos/photos";
 import { ImageSourcePropType } from "react-native";
 import { SharedValue } from "react-native-reanimated";
 
+//Approach 3: interface
+export interface UserType {
+    id: number;
+    name: string;
+    email: string;
+    university: string;
+    major: string;
+    yearOfStudy: string;
+    preference: string;
+    imgPath: ImageSourcePropType;
+  }
 
+//type alias for user's data    
 export type Usr_dataType = {
-    user: {
-        id: number,
-        name: string,
-        email: string,
-        university: string,
-        major: string,
-        yearOfStudy: string,
-        preference: string,
-        imgPath: ImageSourcePropType
-    };
+    user: UserType;
     numberOfcards: number,
     index: number,
     activeIndex: SharedValue<number>;
     onResponse:(a: boolean) => void;
 };
 
-
-export const usr_data = [
+export const usr_data: UserType[] = [
     {
         id: 1,
         name: 'Yasuo',
@@ -68,3 +70,38 @@ export const usr_data = [
     },
 
 ];
+
+
+// To define the type for usr_data, check all available approaches below.
+
+{/* Approach 1: Create a new type alias for usr_data 
+    
+    type User_dataType = {
+     id: number,
+     name: string,
+     email: string,
+     university: string,
+     major: string,
+     yearOfStudy: string,
+     preference: string,
+     imgPath: ImageSourcePropType
+ }
+
+    const usr_data: User_dataType[] = {...}
+*/}
+
+
+{/* Approach 2: Using indexed access types 
+    
+        export type User_data_Type = Usr_dataType['user']; <== access the index element of usr_dataType (Only available for type alias)
+
+        export const usrs_data: User_data_Type[] = []
+
+*/}
+
+
+{/* Approach 3: Using interface 
+    
+    Adopted.
+    
+*/}

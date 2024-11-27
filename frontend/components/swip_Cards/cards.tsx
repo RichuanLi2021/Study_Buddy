@@ -2,8 +2,9 @@ import { View, Text, StyleSheet, Image, Dimensions } from 'react-native'
 import React from 'react'
 import { Usr_dataType } from '@/constants/usrData';
 import { LinearGradient } from 'expo-linear-gradient';
-import Animated, {interpolate, useAnimatedStyle, useSharedValue, useDerivedValue, withSpring, runOnJS} from 'react-native-reanimated';
+import Animated, {interpolate, useAnimatedStyle, useSharedValue, withSpring, runOnJS} from 'react-native-reanimated';
 import { GestureDetector, Gesture} from 'react-native-gesture-handler';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 // Screen Width
 const screen_Width = Dimensions.get('screen').width;
@@ -41,6 +42,7 @@ const Usr_Cards = ({
           [-30, 0, 0]
         )
         },
+        //swip to the left
         {
           translateX: 
             activeIndex.value >= index
@@ -50,11 +52,22 @@ const Usr_Cards = ({
                   [0, translationX.value, -screen_Width]
               ) : 0,
         },
+        //swipe to the right
+        {
+          translateX: 
+            activeIndex.value >= index
+              ? interpolate(
+                  activeIndex.value,
+                  [index + 1, index, index - 1],
+                  [0, translationX.value, -screen_Width]
+              ) : 0,
+        },
+
         {
           rotateZ: `${interpolate(
                 translationX.value, 
-                [-screen_Width / 2, 0, screen_Width / 2], 
-                [-10, 0, 10]
+                [-screen_Width / 3, 0, screen_Width / 3], 
+                [-2, 0, 2]
               )}deg`,
             }],
         }));
@@ -76,12 +89,10 @@ const Usr_Cards = ({
             velocity: event.velocityX,
           });
           activeIndex.value = withSpring(index + 1);
-          
           runOnJS(onResponse)(event.velocityX > 0);
         } else {
           translationX.value = withSpring(0);
-        }
-      });
+        }});
 
   return (
     <GestureDetector gesture={gesture}>
@@ -108,8 +119,12 @@ const Usr_Cards = ({
         />
 
         <View style={styles.footer}>
-          <Text style={styles.text}>{user.name}</Text>
-          <Text style={styles.subText}>{user.university}</Text>
+          <View style={styles.nameArea}>
+            <Text style={styles.text}>{user.name} </Text>
+            <FontAwesome name="star" size={24} color="yellow"/>
+          </View>
+            <Text style={styles.subText}>{user.university}</Text>
+            <Text style={styles.subText}>{user.major}</Text>
         </View>
       </Animated.View>
     </GestureDetector>
@@ -148,6 +163,7 @@ const styles = StyleSheet.create({
     },
 
     footer: {
+      flex: 0,
       padding: 10,
     },
 
@@ -160,13 +176,19 @@ const styles = StyleSheet.create({
     text: {
       fontSize: 24,
       color: 'white',
-      fontFamily: 'InterBold'
+      fontWeight: 'bold'
     },
 
     subText: {
       fontSize: 20,
-      color: 'black',
-      fontWeight: 'bold',
+      color: 'white',
+      fontWeight: 'light',
+    },
+
+    nameArea: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'flex-start'
     }
 })
 
