@@ -1,15 +1,27 @@
 import { View, Text, Image } from 'react-native'
 import { ScrollView } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import React, { useEffect, useState } from 'react'
-import {EditButton, SaveButton} from '@/components/profile/button/buttons'
+import React, { useEffect, useState, createContext } from 'react'
+import {EditButton, SaveButton, LogoutButton} from '@/components/profile/button/buttons'
 import FormEditProfile from '@/components/profile/forEditProfile/FormEditProfile'
+import * as ImagePicker from 'expo-image-picker';
 import { validateName, validatePhone, validateUniversity, validateMajor, validateYear } from '@/components/profile/InputValidation/Input_Validation'
 import Toast from 'react-native-toast-message';
 import Errors from '@/components/error_message/form_error';
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { Link, router } from 'expo-router';
 
 const usr_profile = () => {
+    const [profilePicture, setProfilePicture] = useState(null);
+    const openGallery = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            allowsEditing: true,
+            quality: 1,
+          });
+      setProfilePicture(result.assets[0].uri);
+      console.log(result.assets[0].uri);
+    }
+
     {/* Initialize profile form variables */}
     const [form, setForm] = useState({
             name: "Your Name",
@@ -60,7 +72,7 @@ const usr_profile = () => {
 
     useEffect(()=>{
         validateForm();
-    }, [form.name, form.phone, form.university, form.major, form.year, form.touched.name, form.touched.phone, form.touched.university, form.touched.major, form.touched.year]);
+    }, [form.name, form.phone, form.touched.name, form.touched.phone]);
 
     //Form validation
     const validateForm = () => {
@@ -104,6 +116,11 @@ const usr_profile = () => {
         return;
     }
 
+    const handleLogoutPress = async () => {
+            router.push('/');
+            return;
+        }
+
     const handleUpdatePress = async () => {
         if(!form.isFormValid){
             Toast.show({
@@ -137,17 +154,22 @@ const usr_profile = () => {
             </View>
 
             {/* Main profile info (image, name, phone) */}
-            <View style={{flexDirection: 'row', height: 170}}>
-                {/* Profile picture (uses placeholder image icon.png from project directory) */}
-                <Image
-                    style={{
-                        width: 170,
-                        height: 170,
-                        borderWidth: 2,
-                        borderColor: 'black'
-                    }}
-                    source={require('../../assets/images/icon.png')}
-                />
+            <View style={{flexDirection: 'row', height: 200}}>
+                {/* Edit profile picture (not visible until edit button clicked) */}
+                <View style={{display: visible ? 'flex' : 'none'}}>
+                    {/* Button to choose a profile picture from device gallery */}
+                    <EditButton
+                        title="Change Profile Picture"
+                        onPress={openGallery}
+                        buttonStyle={{
+                            width: 170,
+                            height: 170,
+                            borderStyle: 'solid',
+                            borderWidth: 2,
+                            borderColor: 'black'
+                        }}
+                    />
+                </View>
 
                 {/* Edit main profile info forms (not visible until edit button clicked) */}
                 <View style={{display: visible ? 'flex' : 'none'}}>
@@ -167,6 +189,21 @@ const usr_profile = () => {
                         handleChangeText={handlePhoneChange}
                         otherStyles={{marginTop: 10, marginLeft: 10}}
                         keyboardType="phone-pad"
+                    />
+                </View>
+
+                {/* Display profile picture */}
+                <View style={{display: visible ? 'none' : 'flex'}}>
+                    {/* Profile picture */}
+                    <Image
+                    style={{
+                        width: 170,
+                        height: 200,
+                        borderStyle: 'solid',
+                        borderWidth: 2,
+                        borderColor: 'black'
+                        }}
+                    source={{uri:profilePicture}}
                     />
                 </View>
 
@@ -305,6 +342,14 @@ const usr_profile = () => {
                 <Text style={{color: '#FF7900', marginTop: 10, marginBottom: 10, fontWeight: 700}}>Availability: </Text>
                 {/* Placeholder text, does not use selected dropdown value yet */}
                 <Text style={{paddingRight: 10}}>{form.studyDay} {form.studyTime}</Text>
+                <View style={{alignItems: 'center', paddingTop: 20}}>
+                <LogoutButton
+                    title="Log Out"
+                    handlePress={handleLogoutPress}
+                    buttonStyle={{width: 100, height: 50}}
+                    isLoading={false}
+                />
+                </View>
             </View>
     </ScrollView>
     </SafeAreaView>
