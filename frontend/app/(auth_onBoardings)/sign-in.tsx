@@ -123,7 +123,7 @@ const login = () => {
 
                         // Pause the navigation to the next page to allow the toast to show
                         setTimeout(() => {
-                            router.push('/(tabs)/usr_home');
+                            router.push('/(tabs)/usr_match');
                         }, 2000);
                     })
                     .catch((err) => {
