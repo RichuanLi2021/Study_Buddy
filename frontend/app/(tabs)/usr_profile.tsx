@@ -1,26 +1,28 @@
-import { View, Text, Image } from 'react-native'
+import { View, Text, Image, ImageSourcePropType } from 'react-native'
 import { ScrollView } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select';
-import React, { useEffect, useState, createContext } from 'react'
+import React, { useEffect, useState } from 'react'
 import {EditButton, SaveButton, LogoutButton} from '@/components/profile/button/buttons'
 import FormEditProfile from '@/components/profile/forEditProfile/FormEditProfile'
 import * as ImagePicker from 'expo-image-picker';
-import { validateName, validatePhone, validateUniversity, validateMajor, validateYear } from '@/components/profile/InputValidation/Input_Validation'
+import { validateName, validatePhone } from '@/components/profile/InputValidation/Input_Validation'
 import Toast from 'react-native-toast-message';
 import Errors from '@/components/error_message/form_error';
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { Link, router } from 'expo-router';
+import {router } from 'expo-router';
 
 const usr_profile = () => {
-    const [profilePicture, setProfilePicture] = useState(null);
+    const [profilePicture, setProfilePicture] = useState<string | null>(null);
     const openGallery = async () => {
         let result = await ImagePicker.launchImageLibraryAsync({
             allowsEditing: true,
             quality: 1,
           });
-      setProfilePicture(result.assets[0].uri);
-      console.log(result.assets[0].uri);
-    }
+          if (!result.canceled && result.assets.length > 0) {
+            setProfilePicture(result.assets[0].uri);
+            console.log(result.assets[0].uri);
+          }
+        };
 
     {/* Initialize profile form variables */}
     const [form, setForm] = useState({
@@ -168,6 +170,8 @@ const usr_profile = () => {
                             borderWidth: 2,
                             borderColor: 'black'
                         }}
+                        handlePress={openGallery}
+                        isLoading={false}
                     />
                 </View>
 
@@ -195,16 +199,17 @@ const usr_profile = () => {
                 {/* Display profile picture */}
                 <View style={{display: visible ? 'none' : 'flex'}}>
                     {/* Profile picture */}
-                    <Image
-                    style={{
-                        width: 170,
-                        height: 200,
-                        borderStyle: 'solid',
-                        borderWidth: 2,
-                        borderColor: 'black'
-                        }}
-                    source={{uri:profilePicture}}
-                    />
+                    {profilePicture && (
+                        <Image
+                            style={{
+                                width: 170,
+                                height: 200,
+                                borderWidth: 2,
+                                borderColor: 'black'
+                            }}
+                            source={{uri:profilePicture}}
+                        />
+                    )}
                 </View>
 
                 {/* Name and phone number (visible by default, uses info from form variables) */}

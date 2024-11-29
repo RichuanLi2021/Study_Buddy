@@ -6,7 +6,7 @@ interface EditButtonProps extends TouchableOpacityProps {
     title: string;
     handlePress: () => void;
     buttonStyle?: StyleProp<ViewStyle>;
-    isLoading: boolean;
+    isLoading?: boolean;
 }
 
 interface SaveButtonProps extends TouchableOpacityProps {

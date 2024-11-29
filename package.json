@@ -15,10 +15,5 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^9.0.1"
-  },
-  "dependencies": {
-    "expo": "^51.0.39",
-    "expo-image-picker": "^16.0.2",
-    "react-native-image-picker": "^5.7.0"
   }
 }

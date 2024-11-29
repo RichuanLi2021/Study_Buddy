@@ -9,6 +9,7 @@ export default {
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
+    "jsEngine": "jsc",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",

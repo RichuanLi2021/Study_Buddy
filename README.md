@@ -176,6 +176,13 @@ npm cache clean --force
 
 4. Disable auto-update by removing "^" and "~" for the dependency that you want to lock.
 
+### Autolinking: investigate installed expo modules
+[Autolinking](https://docs.expo.dev/modules/autolinking/)
+
+* (search phase) npx expo-modules-autolinking search
+* (resolve phase) npx expo-modules-autolinking resolve --platform <apple|android>
+* (verify phase) npx expo-modules-autolinking verify
+
 
 ### Styling debug with devTools
 
