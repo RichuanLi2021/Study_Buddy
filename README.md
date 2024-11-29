@@ -168,13 +168,82 @@ npm cache clean --force
 
 ### Issues with dependencies and packages in package.json
 * Some issues i have noticed by far are:
-1. The versions of dependencies in package.json can be different from the actual installed.
+1. The versions of dependencies in package.json can be different from the actual installed in package-lock.json, so check what is actually installed by typing:
 
-2. Update or downgrade of dependencies can cause the collapse of project because of compatability in terms of different dependencies.
+```
+npm ls @react-native-picker/picker
 
-3. Check the actual version of dependencies: npm ls + name of the dependency
+├── @react-native-picker/picker@2.7.5
+└─┬ react-native-picker-select@9.3.1
+  └── @react-native-picker/picker@2.7.5 deduped
+```
+
+2. Update or downgrade of dependencies can cause the collapse of project because of compatability in terms of different dependencies. for exmaple, expo 51 only supports react native version below 75.
+
+```
+npx expo-doctor
+
+```
+
+3. At root directory, once the dependency update or downgrade is completed, do the following:
+
+```
+rm -rf node_modules package-lock.json
+npm cache clean --force
+npm install
+
+cd ios/android
+
+Reinstall Pods or android gradle
+
+(ios) pod install 
+(android) ./gradlew clean
+
+```
+
+* if any error occur while installing pod, try refreshing CocoaPods
+
+```
+pod repo update
+pod install
+```
+
+* Return back to root directory
+
+```
+cd ..
+
+npx expo run:ios
+or
+npx expo run:android
+or
+npm start --reset-cache
+or
+npx expo start -c (recommended)
+```
+
+* Clean the ios or android project if issue persist
+
+```
+cd ios
+rm -rf Pods Podfile.lock
+pod install
+xcodebuild clean
+cd ..
+
+or
+
+cd android
+./gradlew clean
+cd ..
+
+```
 
 4. Disable auto-update by removing "^" and "~" for the dependency that you want to lock.
+
+* Uninstall node_module and package-lock.json and reinstall em for any changes made in package.json
+
+
 
 ### Autolinking: investigate installed expo modules
 [Autolinking](https://docs.expo.dev/modules/autolinking/)
