@@ -27,6 +27,61 @@ export type Usr_dataType = {
 export const usr_data: UserType[] = [
     {
         id: 1,
+        name: 'Ahemed',
+        email: "ahemed@dal.ca",
+        university: "Dalhousie University",
+        major: "Computer Science",
+        yearOfStudy: "4th",
+        preference: "Group sudy",
+        imgPath: images.Ahemed
+    },
+
+    {
+        id: 2,
+        name: 'Faris',
+        email: "faris@dal.ca",
+        university: "Dalhousie University",
+        major: "Computer Science",
+        yearOfStudy: "3rd",
+        preference: "Group sudy",
+        imgPath: images.Faris
+    },
+
+    {
+        id: 3,
+        name: 'karl',
+        email: "karl@dal.ca",
+        university: "Dalhousie University",
+        major: "Computer Science",
+        yearOfStudy: "4th",
+        preference: "Group sudy",
+        imgPath: images.Karl
+    },
+
+    {
+        id: 4,
+        name: 'Tyler',
+        email: "tyler@dal.ca",
+        university: "Dalhousie University",
+        major: "Computer Science",
+        yearOfStudy: "2nd",
+        preference: "Group sudy",
+        imgPath: images.Tyler
+    },
+
+    {
+        id: 5,
+        name: 'Ryan',
+        email: "ryan@dal.ca",
+        university: "Dalhousie University",
+        major: "Computer Science",
+        yearOfStudy: "3rd",
+        preference: "Group sudy",
+        imgPath: images.Ryan
+    },
+
+    {
+        id: 6,
         name: 'Yasuo',
         email: "123@lonia.ca",
         university: "Ionia University",
@@ -37,7 +92,7 @@ export const usr_data: UserType[] = [
     },
 
     {
-        id: 2,
+        id: 7,
         name: 'Jinx',
         email: "234@lol.ca",
         university: "Riot University",
@@ -48,7 +103,18 @@ export const usr_data: UserType[] = [
     },
 
     {
-        id: 3,
+        id: 8,
+        name: 'Study_buddy',
+        email: "Hi@dal.ca",
+        university: "Dalhousie University",
+        major: "Computer Science",
+        yearOfStudy: "4th",
+        preference: "Group sudy",
+        imgPath: images.Boyes
+    },
+
+    {
+        id: 9,
         name: 'Pantheon',
         email: "pan@god.ca",
         university: "Riot University",
@@ -59,7 +125,7 @@ export const usr_data: UserType[] = [
     },
 
     {
-        id: 4,
+        id: 10,
         name: 'Elon_musk',
         email: "elon@spacex.ca",
         university: "Tesla University",
